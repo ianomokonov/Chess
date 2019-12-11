@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Figure } from '../models';
+import { Figure, StepType } from '../models';
 import { FiguresSetting } from '../figures-setting';
 
 @Component({
@@ -12,11 +12,17 @@ export class ChessFieldComponent implements OnInit {
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
+  private positions: string[];
   constructor() { }
 
   ngOnInit() {
     this.figures = FiguresSetting.white;
+    this.setPositions()
     this.genField();
+  }
+
+  private setPositions(){
+    this.positions = this.figures.map(x => `${x.x},${x.y}`);
   }
 
   genField(){
@@ -27,8 +33,19 @@ export class ChessFieldComponent implements OnInit {
       }
       this.rows.push(row);
     }
+  }
 
-    console.log(this.rows)
+  go(cell){
+    if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
+      this.activeFigure.x = cell.x;
+      this.activeFigure.y = cell.y;
+      this.activeFigure['active'] = false;
+      this.possibleSteps = [];
+      this.setPositions();
+    } else {
+      this.activeFigure['active'] = false;
+      this.possibleSteps = [];
+    }
   }
 
   take(figure){
@@ -43,10 +60,119 @@ export class ChessFieldComponent implements OnInit {
     this.possibleSteps = [];
     if(rule.steps){
       rule.steps.forEach(s => {
-        this.possibleSteps.push(`${this.activeFigure.x + (s.x || 0)},${this.activeFigure.y + (s.y || 0)}`)
+        
+        if(!s.if_y || s.if_y.indexOf(this.activeFigure.y)>-1){
+          let pos = null;
+          if(figure.reverse){
+            pos = {x: this.activeFigure.x + (s.x || 0), y: this.activeFigure.y + (s.y*-1 || 0)};
+          } else {
+            pos = {x: this.activeFigure.x + (s.x || 0), y: this.activeFigure.y + (s.y || 0)};
+            
+          }
+          let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
+          if(f){
+            if(f.color !== this.activeFigure.color){
+              this.possibleSteps.push(`${pos.x},${pos.y}`);
+            }
+            
+          } else {
+            this.possibleSteps.push(`${pos.x},${pos.y}`);
+          }
+        }
+        
       })
     }
-    console.log(this.possibleSteps)
+    if(rule.types){
+      rule.types.forEach(t =>{
+        switch(t){
+          case StepType.Diagonal: {
+            let step = {
+              x: this.activeFigure.x,
+              y: this.activeFigure.y
+            }
+            let next = {
+              left:{
+                x: -1,
+                y: 1
+              },
+              top:{
+                x: 1,
+                y: 1
+              },
+              right:{
+                x: 1,
+                y: -1
+              },
+              bottom:{
+                x: -1,
+                y: -1
+              },
+            }
+            let k = 1
+            while(true){
+              let keys = Object.keys(next);
+              for(let key of keys){
+                const pos = `${step.x+k*next[key].x},${step.y+k*next[key].y}`;
+                if(this.positions.indexOf(pos)<0){
+                  this.possibleSteps.push(pos);
+                }else{
+                  delete next[key];
+                }
+              }
+              k++;
+              if(k>7){
+                break;
+              }
+            }
+            break;
+          }
+          case StepType.Strait: {
+            const step = {
+              x: this.activeFigure.x,
+              y: this.activeFigure.y
+            }
+            let next = {
+              left:{
+                x: -1,
+                y: 0
+              },
+              top:{
+                x: 0,
+                y: -1
+              },
+              right:{
+                x: 1,
+                y: 0
+              },
+              bottom:{
+                x: 0,
+                y: 1
+              },
+            }
+            let k = 1
+            while(true){
+              let keys = Object.keys(next);
+              for(let key of keys){
+                const pos = `${step.x+k*next[key].x},${step.y+k*next[key].y}`;
+                if(this.positions.indexOf(pos)<0){
+                  this.possibleSteps.push(pos);
+                }else{
+                  delete next[key];
+                }
+              }
+              
+              k++;
+              if(k>7){
+                break;
+              }
+            }
+            break;
+          }
+        }
+        
+      })
+     
+    }
   }
 
 }

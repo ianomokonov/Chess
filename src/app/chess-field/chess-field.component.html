@@ -1,6 +1,9 @@
 <div class="field">
     <div class="row" *ngFor="let row of rows">
-        <div class="cell" *ngFor="let cell of row" [ngClass]="{'possible': possibleSteps.indexOf(cell.x+','+cell.y)>-1}"></div>
+        <div class="cell" 
+        (click)="go(cell)"
+        *ngFor="let cell of row" 
+        [ngClass]="{'possible': possibleSteps.indexOf(cell.x+','+cell.y)>-1}"></div>
     </div>
     <div 
         class="figure" 

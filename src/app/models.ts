@@ -9,6 +9,8 @@ export class Figure{
     img: string;
     alive: boolean = true;
     type: FigureType;
+    reverse?: boolean;
+    color: FigureColor;
 }
 
 export enum FigureType{
@@ -29,4 +31,9 @@ export enum FigureType{
 export enum StepType{
     Diagonal,
     Strait
+}
+
+export enum FigureColor{
+    Black = 'black',
+    White = 'white'
 }

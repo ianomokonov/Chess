@@ -1,4 +1,4 @@
-import { Figure, FigureType, StepType } from './models';
+import { Figure, FigureType, StepType, FigureColor } from './models';
 
 
 
@@ -9,231 +9,272 @@ export class FiguresSetting{
           y: 0,
           img: '../../assets/figures/bR.png',
           alive: true,
-          type: FigureType.Rook
+          type: FigureType.Rook,
+          color: FigureColor.Black
         },
         {
           x: 7,
           y: 0,
           img: '../../assets/figures/bR.png',
           alive: true,
-          type: FigureType.Rook
+          type: FigureType.Rook,
+          color: FigureColor.Black
         },
         {
           x: 1,
           y: 0,
           img: '../../assets/figures/bN.png',
           alive: true,
-          type: FigureType.Knight
+          type: FigureType.Knight,
+          color: FigureColor.Black
         },
         {
           x: 6,
           y: 0,
           img: '../../assets/figures/bN.png',
           alive: true,
-          type: FigureType.Knight
+          type: FigureType.Knight,
+          color: FigureColor.Black
         },
         {
           x: 2,
           y: 0,
           img: '../../assets/figures/bB.png',
           alive: true,
-          type: FigureType.Bishop
+          type: FigureType.Bishop,
+          color: FigureColor.Black
         },
         {
           x: 5,
           y: 0,
           img: '../../assets/figures/bB.png',
           alive: true,
-          type: FigureType.Bishop
+          type: FigureType.Bishop,
+          color: FigureColor.Black
         },
         {
           x: 3,
           y: 0,
           img: '../../assets/figures/bK.png',
           alive: true,
-          type: FigureType.King
+          type: FigureType.King,
+          color: FigureColor.Black
         },
         {
           x: 4,
           y: 0,
           img: '../../assets/figures/bQ.png',
           alive: true,
-          type: FigureType.Queen
+          type: FigureType.Queen,
+          color: FigureColor.Black
         },
         {
           x: 0,
           y: 7,
           img: '../../assets/figures/wR.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Rook,
+          color: FigureColor.White
         },
         {
           x: 7,
           y: 7,
           img: '../../assets/figures/wR.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Rook,
+          color: FigureColor.White
         },
         {
           x: 1,
           y: 7,
           img: '../../assets/figures/wN.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Knight,
+          color: FigureColor.White
         },
         {
           x: 6,
           y: 7,
           img: '../../assets/figures/wN.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Knight,
+          color: FigureColor.White
         },
         {
           x: 2,
           y: 7,
           img: '../../assets/figures/wB.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Bishop,
+          color: FigureColor.White
         },
         {
           x: 5,
           y: 7,
           img: '../../assets/figures/wB.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Bishop,
+          color: FigureColor.White
         },
         {
           x: 3,
           y: 7,
           img: '../../assets/figures/wK.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.King,
+          color: FigureColor.White
         },
         {
           x: 4,
           y: 7,
           img: '../../assets/figures/wQ.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Queen,
+          color: FigureColor.White
         },
         {
           x: 0,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 0,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 1,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 2,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 3,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 4,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 5,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 6,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 7,
           y: 1,
           img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          color: FigureColor.Black
         },
         {
           x: 0,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 1,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 2,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 3,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 4,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 5,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 6,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         },
         {
           x: 7,
           y: 6,
           img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn
+          type: FigureType.Pawn,
+          reverse: true,
+          color: FigureColor.White
         }
         
     ];
@@ -287,6 +328,14 @@ export class FiguresSetting{
           {
             y: 1,
             x: -2
+          },
+          {
+            y: -2,
+            x: -1
+          },
+          {
+            y: -2,
+            x: 1
           }
         ]
         
