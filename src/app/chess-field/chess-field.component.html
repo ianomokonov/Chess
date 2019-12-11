@@ -1,0 +1,14 @@
+<div class="field">
+    <div class="row" *ngFor="let row of rows">
+        <div class="cell" *ngFor="let cell of row" [ngClass]="{'possible': possibleSteps.indexOf(cell.x+','+cell.y)>-1}"></div>
+    </div>
+    <div 
+        class="figure" 
+        *ngFor="let figure of figures"  
+        [ngClass]="{'active':figure.active}"
+        [ngStyle]="{'left':figure.x*80+'px', 'top':figure.y*80+'px', 'background-image':'url('+figure.img+')'}"
+        (click)="take(figure)"
+        >
+    </div>
+   
+</div>

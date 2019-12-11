@@ -1,0 +1,41 @@
+.field{
+    width: 640px;
+    height: 640px;
+    position: relative;
+    .row{
+        height: 80px;
+        display: flex;
+        .cell{
+            width: 80px;
+            height: 80px;
+            background-color: rgba(209, 178, 131, 0.959);
+
+            &.possible{
+                box-shadow: 0 0 8px rgb(27, 243, 27) inset;
+            }
+        }
+        &:nth-child(2n){
+            .cell:nth-child(2n+1){
+                background-color: rgba(82, 70, 52, 0.959);
+            }
+        }
+        &:nth-child(2n+1){
+            .cell:nth-child(2n){
+                background-color: rgba(82, 70, 52, 0.959);
+            }
+        }
+    }
+
+    .figure{
+        position: absolute;
+        width: 80px;
+        height: 80px;
+        background-repeat: no-repeat;
+        background-position: center;
+
+        &.active{
+            box-shadow: 0 0 8px rgb(27, 67, 243) inset;
+        }
+    }
+    
+}
