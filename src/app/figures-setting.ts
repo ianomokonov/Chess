@@ -53,7 +53,7 @@ export class FiguresSetting{
           color: FigureColor.Black
         },
         {
-          x: 3,
+          x: 4,
           y: 0,
           img: '../../assets/figures/bK.png',
           alive: true,
@@ -61,7 +61,7 @@ export class FiguresSetting{
           color: FigureColor.Black
         },
         {
-          x: 4,
+          x: 3,
           y: 0,
           img: '../../assets/figures/bQ.png',
           alive: true,
@@ -117,7 +117,7 @@ export class FiguresSetting{
           color: FigureColor.White
         },
         {
-          x: 3,
+          x: 4,
           y: 7,
           img: '../../assets/figures/wK.png',
           alive: true,
@@ -125,7 +125,7 @@ export class FiguresSetting{
           color: FigureColor.White
         },
         {
-          x: 4,
+          x: 3,
           y: 7,
           img: '../../assets/figures/wQ.png',
           alive: true,

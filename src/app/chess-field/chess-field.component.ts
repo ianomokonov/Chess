@@ -19,7 +19,12 @@ export class ChessFieldComponent implements OnInit {
    }
 
   ngOnInit() {
-    this.figures = FiguresSetting.white;
+    this.possibleSteps = [];
+    this.activeFigure = null;
+    this.currentColor = FigureColor.White;
+    this.figures = JSON.parse(JSON.stringify(FiguresSetting.white));
+    this.rows = [];
+    this.dead = { white: [], black: [] };
     this.genField();
   }
 
@@ -34,6 +39,9 @@ export class ChessFieldComponent implements OnInit {
   }
 
   go(cell){
+    if(!this.activeFigure){
+      return;
+    }
     if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
       this.activeFigure.x = cell.x;
       this.activeFigure.y = cell.y;
@@ -44,15 +52,20 @@ export class ChessFieldComponent implements OnInit {
       this.activeFigure['active'] = false;
       this.possibleSteps = [];
     }
-    console.log(this.figures.map(f => {return { x: f.x, y: f.y, color: f.color, img: f.img}}))
   }
 
   take(figure: Figure){
     if(figure.color !== this.currentColor){
       if(this.possibleSteps.indexOf(`${figure.x},${figure.y}`)>-1){
+        
         figure.alive = false;
         this.dead[figure.color].push(figure);
         this.figures.splice(this.figures.findIndex(x => x.x == figure.x && x.y == figure.y), 1);
+        
+        if(figure.type === FigureType.King){
+          alert(this.currentColor + 'win!' )
+          this.ngOnInit();
+        }
         this.go({x: figure.x, y: figure.y});
       }
       return;
