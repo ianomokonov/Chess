@@ -12,7 +12,6 @@ export class ChessFieldComponent implements OnInit {
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
-  private positions: string[];
   private currentColor: FigureColor;
   private dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
   constructor() {
@@ -21,12 +20,7 @@ export class ChessFieldComponent implements OnInit {
 
   ngOnInit() {
     this.figures = FiguresSetting.white;
-    this.setPositions()
     this.genField();
-  }
-
-  private setPositions(){
-    this.positions = this.figures.map(x => `${x.x},${x.y}`);
   }
 
   genField(){
@@ -45,12 +39,12 @@ export class ChessFieldComponent implements OnInit {
       this.activeFigure.y = cell.y;
       this.activeFigure['active'] = false;
       this.possibleSteps = [];
-      this.setPositions();
       this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
     } else {
       this.activeFigure['active'] = false;
       this.possibleSteps = [];
     }
+    console.log(this.figures.map(f => {return { x: f.x, y: f.y, color: f.color, img: f.img}}))
   }
 
   take(figure: Figure){
@@ -58,8 +52,8 @@ export class ChessFieldComponent implements OnInit {
       if(this.possibleSteps.indexOf(`${figure.x},${figure.y}`)>-1){
         figure.alive = false;
         this.dead[figure.color].push(figure);
-        console.log(this.dead);
-        this.go({x: figure.x, y: figure.y})
+        this.figures.splice(this.figures.findIndex(x => x.x == figure.x && x.y == figure.y), 1);
+        this.go({x: figure.x, y: figure.y});
       }
       return;
     }
@@ -88,7 +82,6 @@ export class ChessFieldComponent implements OnInit {
             if(f.color !== this.activeFigure.color && !rule.kill){
               this.possibleSteps.push(`${pos.x},${pos.y}`);
             }
-            
           } else {
             this.possibleSteps.push(`${pos.x},${pos.y}`);
           }
@@ -190,11 +183,17 @@ export class ChessFieldComponent implements OnInit {
             while(true){
               let keys = Object.keys(next);
               for(let key of keys){
-                const pos = `${step.x+k*next[key].x},${step.y+k*next[key].y}`;
-                if(this.positions.indexOf(pos)<0){
-                  this.possibleSteps.push(pos);
-                }else{
+                const pos = { x: step.x+k*next[key].x, y: step.y+k*next[key].y};
+
+                let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
+                if(f){
+                  if(f.color !== this.activeFigure.color){
+                    this.possibleSteps.push(`${pos.x},${pos.y}`);
+                  }
                   delete next[key];
+                  
+                } else {
+                  this.possibleSteps.push(`${pos.x},${pos.y}`);
                 }
               }
               
