@@ -63,7 +63,7 @@ export class ChessFieldComponent implements OnInit {
         this.figures.splice(this.figures.findIndex(x => x.x == figure.x && x.y == figure.y), 1);
         
         if(figure.type === FigureType.King){
-          alert(this.currentColor + 'win!' )
+          alert(this.currentColor + ' win!' )
           this.ngOnInit();
         }
         this.go({x: figure.x, y: figure.y});
