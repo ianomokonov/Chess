@@ -1,17 +1,38 @@
-<div class="field">
-    <div class="row" *ngFor="let row of rows">
-        <div class="cell" 
-        (click)="go(cell)"
-        *ngFor="let cell of row" 
-        [ngClass]="{'possible': possibleSteps.indexOf(cell.x+','+cell.y)>-1}"></div>
+<div class="d-flex">
+    <div class="field">
+        <div class="row" *ngFor="let row of rows">
+            <div class="cell" 
+            (click)="go(cell)"
+            *ngFor="let cell of row" 
+            [ngClass]="{'possible': possibleSteps.indexOf(cell.x+','+cell.y)>-1}"></div>
+        </div>
+        <div 
+            class="figure" 
+            *ngFor="let figure of figures"  
+            [ngClass]="{'active':figure.active, 'd-none': !figure.alive}"
+            [ngStyle]="{'left':figure.x*80+'px', 'top':figure.y*80+'px', 'background-image':'url('+figure.img+')'}"
+            (click)="take(figure)"
+            >
+        </div>
     </div>
-    <div 
-        class="figure" 
-        *ngFor="let figure of figures"  
-        [ngClass]="{'active':figure.active}"
-        [ngStyle]="{'left':figure.x*80+'px', 'top':figure.y*80+'px', 'background-image':'url('+figure.img+')'}"
-        (click)="take(figure)"
-        >
+    <div class="d-flex flex-column">
+        <div class="dead">
+            <div 
+            class="figure" 
+            *ngFor="let figure of dead.white"  
+            [ngStyle]="{'background-image':'url('+figure.img+')'}"
+            >
+            </div>
+        </div>
+        <hr class="w-100">
+        <div class="dead">
+            <div 
+            class="figure" 
+            *ngFor="let figure of dead.black"  
+            [ngStyle]="{'background-image':'url('+figure.img+')'}"
+            >
+        </div>
+
     </div>
-   
 </div>
+

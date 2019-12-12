@@ -11,6 +11,7 @@ export class Figure{
     type: FigureType;
     reverse?: boolean;
     color: FigureColor;
+    active?: boolean;
 }
 
 export enum FigureType{

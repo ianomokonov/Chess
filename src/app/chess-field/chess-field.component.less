@@ -1,13 +1,14 @@
 .field{
-    width: 640px;
-    height: 640px;
+    min-width: 640px;
+    min-height: 640px;
     position: relative;
     .row{
         height: 80px;
         display: flex;
+        margin: 0;
         .cell{
-            width: 80px;
-            height: 80px;
+            min-width: 80px;
+            min-height: 80px;
             background-color: rgba(209, 178, 131, 0.959);
 
             &.possible{
@@ -28,14 +29,34 @@
 
     .figure{
         position: absolute;
-        width: 80px;
-        height: 80px;
-        background-repeat: no-repeat;
-        background-position: center;
+        
 
         &.active{
             box-shadow: 0 0 8px rgb(27, 67, 243) inset;
         }
     }
     
+}
+
+.dead{
+    display: flex;
+    flex-wrap: wrap;
+    max-height: 310px;
+    height: 310px;
+    overflow: auto;
+
+    &:nth-of-type(2){
+        flex-wrap: wrap-reverse !important;
+    }
+
+    .figure{
+        position: unset !important;
+    }
+}
+
+.figure{
+    min-width: 80px;
+        height: 80px;
+        background-repeat: no-repeat;
+        background-position: center;
 }
