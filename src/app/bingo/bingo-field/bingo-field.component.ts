@@ -8,7 +8,8 @@ import { Component, OnInit } from '@angular/core';
 export class BingoFieldComponent implements OnInit {
   cards = [];
   numbers = [];
-  currentNumber = 55;
+  barrelNumbers = [];
+  currentNumber = null;
   constructor() { }
 
   ngOnInit() {
@@ -19,12 +20,15 @@ export class BingoFieldComponent implements OnInit {
           continue;
         }
         row.push(i*10 + j);
+        this.barrelNumbers.push(i*10 + j);
 
       }
       this.numbers.push(row)
     }
     this.numbers[8].push(90);
+    this.barrelNumbers.push(90);
     this.genCards()
+    this.next();
     
   }
 
@@ -35,15 +39,15 @@ export class BingoFieldComponent implements OnInit {
       for(let j = 0; j<27; j+=3){
         console.log(j)
         const number = j/3;
-        let index = this.randomInteger(0, nums[number].length);
+        let index = this.randomInteger(0, nums[number].length-1);
         card.push(nums[number][index]);
         nums[number].splice(index, 1);
-        index = this.randomInteger(0, nums[number].length);
+        index = this.randomInteger(0, nums[number].length-1);
         card.push(nums[number][index]);
         nums[number].splice(index, 1);
         console.log(!card[j] && !card[j+1])
         index = !card[j] && !card[j+1] ? 
-          this.randomInteger(0, nums[number].length, false) : this.randomInteger(0, nums[number].length, false);
+          this.randomInteger(0, nums[number].length-1, false) : this.randomInteger(0, nums[number].length-1, false);
         card.push(nums[number][index]);
         nums[number].splice(index, 1);
 
@@ -62,6 +66,13 @@ export class BingoFieldComponent implements OnInit {
   }
 
   next(){
-    this.currentNumber = this.randomInteger(1,90, false);
+    if(this.barrelNumbers.length > 0){
+      const index = this.randomInteger(0,this.barrelNumbers.length-1, false);
+      this.currentNumber = this.barrelNumbers[index];
+      this.barrelNumbers.splice(index, 1);
+    }else{
+      alert('The end!')
+    }
+    
   }
 }
