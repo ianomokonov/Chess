@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bingo.component.less']
 })
 export class BingoComponent implements OnInit {
-
+  
   constructor() { }
 
   ngOnInit() {

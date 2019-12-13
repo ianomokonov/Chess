@@ -1,29 +1,7 @@
-<div class="field d-flex flex-column flex-wrap-reverse">
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
-    <div class="cell"></div>
+<div class="field d-flex flex-column flex-wrap ">
+    <div class="cell flex-center" [ngClass]="{'disabled-cell': !n}" *ngFor="let n of numbers; let i = index" (click)="n && choose(i)">
+        <div [ngClass]="{'barrel flex-center': choosedIndexes.indexOf(i)>-1}">
+            {{n}}
+        </div>
+    </div>
 </div>

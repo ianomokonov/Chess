@@ -1,16 +1,16 @@
 <div class="m-auto">
     <div class="first mb-5">
-        <bingo-card></bingo-card>
-        <bingo-card></bingo-card>
+        <bingo-card [current]="currentNumber" [numbers]="cards[0]"></bingo-card>
+        <bingo-card [current]="currentNumber" [numbers]="cards[1]"></bingo-card>
     </div>
     <div class="barrel flex-center">
         <div class="btn btn-link">Назад</div>
-        <div class="number flex-center">32</div>
-        <div class="btn btn-link">Далее</div>
+        <div class="number flex-center">{{currentNumber}}</div>
+        <div class="btn btn-link" (click)="next()">Далее</div>
     </div>
     <div class="second mt-5">
-        <bingo-card></bingo-card>
-        <bingo-card></bingo-card>
+        <bingo-card [current]="currentNumber" [numbers]="cards[2]"></bingo-card>
+        <bingo-card [current]="currentNumber" [numbers]="cards[3]"></bingo-card>
     </div>  
 </div>
 
