@@ -11,6 +11,7 @@ import { BingoComponent } from './bingo/bingo.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BingoFieldComponent } from './bingo/bingo-field/bingo-field.component';
 import { ChessWinComponent } from './chess/chess-win/chess-win.component';
+import { BingoCardComponent } from './bingo/bingo-card/bingo-card.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { ChessWinComponent } from './chess/chess-win/chess-win.component';
     ChessComponent,
     BingoComponent,
     BingoFieldComponent,
-    ChessWinComponent
+    ChessWinComponent,
+    BingoCardComponent
   ],
   imports: [
     BrowserModule,
