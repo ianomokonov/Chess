@@ -141,14 +141,6 @@ export class FiguresSetting{
           color: FigureColor.Black
         },
         {
-          x: 0,
-          y: 1,
-          img: '../../assets/figures/bP.png',
-          alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
-        },
-        {
           x: 1,
           y: 1,
           img: '../../assets/figures/bP.png',

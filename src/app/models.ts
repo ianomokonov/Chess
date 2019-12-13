@@ -21,9 +21,9 @@ export enum FigureType{
     Rook = 'rook', // ладья
     /** конь */
     Knight = 'knight', // конь
-    /** ферзь */
+    /** принц */
     Bishop = 'bishop', // ферзь
-    /** королева */
+    /** ферзь */
     Queen = 'queen',
     /** король */
     King = 'king'
