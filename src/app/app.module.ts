@@ -10,6 +10,9 @@ import { ChessComponent } from './chess/chess.component';
 import { BingoComponent } from './bingo/bingo.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BingoFieldComponent } from './bingo/bingo-field/bingo-field.component';
+import { ChessWinComponent } from './chess/chess-win/chess-win.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BingoCardComponent } from './bingo/bingo-card/bingo-card.component';
 
 @NgModule({
   declarations: [
@@ -20,11 +23,16 @@ import { BingoFieldComponent } from './bingo/bingo-field/bingo-field.component';
     ChooseGameComponent,
     ChessComponent,
     BingoComponent,
-    BingoFieldComponent
+    BingoFieldComponent,
+    ChessWinComponent,
+    BingoCardComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
