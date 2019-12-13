@@ -1,12 +1,16 @@
-<!-- <div class="button d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Создать игру</button>
-</div>
-<div class="button d-flex justify-content-center">
-        <button type="submit" class="btn btn-primary">Присоединиться к игре</button>
-</div> -->
+
 <div class="h-100 container d-flex justify-content-center align-items-center">
     <div class="d-flex flex-column">
+            <div class="btn-group btn-group-toggle mb-2" data-toggle="buttons">
+                    <label class="btn btn-secondary active ">
+                      <input type="radio" name="options" id="option1" checked> Шахматы
+                    </label>
+                    <label class="btn btn-secondary">
+                      <input type="radio" name="options" id="option2"> Лото
+                    </label>
+            </div>
         <button type="submit" class="btn btn-primary mb-2">Создать игру</button>
         <button type="submit" class="btn btn-primary">Присоединиться к игре</button>
-    </div>
+        <input type="text" class="form-control mt-2" placeholder="ID игры">
+    </div>    
 </div>
