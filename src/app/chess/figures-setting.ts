@@ -1,4 +1,4 @@
-import { Figure, FigureType, StepType, FigureColor } from './models';
+import { Figure, FigureType, StepType, FigureColor } from '../models';
 
 
 

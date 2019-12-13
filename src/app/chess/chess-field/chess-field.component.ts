@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Figure, StepType, FigureColor, FigureType } from '../models';
+import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
 
 @Component({
