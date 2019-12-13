@@ -4,6 +4,7 @@ import { AuthFormComponent } from './auth-form/auth-form.component';
 import { RegFormComponent } from './reg-form/reg-form.component';
 import { ChessComponent } from './chess/chess.component';
 import { BingoComponent } from './bingo/bingo.component';
+import { ChooseGameComponent } from './choose-game/choose-game.component';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   {path: 'reg', component: RegFormComponent},
   {path: 'chess', component: ChessComponent},
   {path: 'bingo', component: BingoComponent},
+  {path: 'choose', component: ChooseGameComponent},
   // {path:'**', redirectTo:''}
 ];
 
