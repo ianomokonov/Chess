@@ -11,6 +11,7 @@ import { BingoComponent } from './bingo/bingo.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BingoFieldComponent } from './bingo/bingo-field/bingo-field.component';
 import { ChessWinComponent } from './chess/chess-win/chess-win.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,10 @@ import { ChessWinComponent } from './chess/chess-win/chess-win.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule
+    
   ],
   providers: [],
   bootstrap: [AppComponent]
