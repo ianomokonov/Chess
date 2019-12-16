@@ -1,23 +1,34 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
 import { ChessService } from 'src/app/services/chess.service';
+import { forkJoin } from 'rxjs';
 
 @Component({
   selector: 'chess-field',
   templateUrl: './chess-field.component.html',
   styleUrls: ['./chess-field.component.less']
 })
-export class ChessFieldComponent implements OnInit {
+export class ChessFieldComponent implements OnInit, OnChanges {
+
+
+  @Input() gameId: number;
+
   public rows = []
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
   private currentColor: FigureColor;
-  private dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
+  public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
   constructor( private cs: ChessService) {
     this.currentColor = FigureColor.White;
-   }
+  }
+
+  ngOnChanges(){
+    if(this.rows.length){
+      this.ngOnInit();
+    }
+  }
 
   ngOnInit() {
     this.possibleSteps = [];
@@ -27,6 +38,19 @@ export class ChessFieldComponent implements OnInit {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField();
+    forkJoin([
+      this.cs.getGame(this.gameId),
+      this.cs.getGameSteps(this.gameId)
+    ]).subscribe(([game, steps]) => {
+      this.currentColor = game.color;
+      this.figures = game.figures;
+      steps.forEach(x => {
+        const figure = this.figures.find(f => f.id === x.figureId);
+        figure.x = x.x;
+        figure.y = x.y;
+      })
+    },
+    error => { console.error('Игра не загружена с сервера!')})
   }
 
   genField(){
@@ -44,6 +68,7 @@ export class ChessFieldComponent implements OnInit {
       return;
     }
     if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
+      this.cs.step({figureId: this.activeFigure.id, x: cell.x, y: cell.y})
       this.activeFigure.x = cell.x;
       this.activeFigure.y = cell.y;
       this.activeFigure['active'] = false;

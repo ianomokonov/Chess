@@ -32,8 +32,16 @@ export class ChooseGameComponent implements OnInit {
       })
     }else{
       this.bingoService.createGame({}).subscribe( id=> {
-        this.router.navigate([GameType.Chess, id]);
+        this.router.navigate([GameType.Bingo, id]);
       })
+    }
+  }
+
+  choose(){
+    if(this.chooseForm.value.type == GameType.Chess){
+      this.router.navigate([GameType.Chess, this.chooseForm.value.gameId]);
+    }else{
+      this.router.navigate([GameType.Bingo, this.chooseForm.value.gameId]);
     }
   }
 

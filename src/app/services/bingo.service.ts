@@ -5,7 +5,7 @@ import { HttpClient } from '@angular/common/http';
 export class BingoService{
     userId: number;
 
-    private readonly baseURL = 'http://localhost/chess/chessController.php';
+    private readonly baseURL = 'http://localhost/chess/bingoController.php';
     constructor( private http: HttpClient ){}
 
     step(step){
