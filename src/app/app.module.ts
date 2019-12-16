@@ -17,6 +17,10 @@ import { BingoCardComponent } from './bingo/bingo-card/bingo-card.component';
 //HTTP запросы
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
 import { ApiInterceptor } from './api.interceptor';
+import { AuthService } from './services/auth.service';
+import { ChessService } from './services/chess.service';
+import { BingoService } from './services/bingo.service';
+import { UserGuard } from './guards/user.guard';
 
 @NgModule({
   declarations: [
@@ -45,7 +49,12 @@ import { ApiInterceptor } from './api.interceptor';
     useClass: ApiInterceptor,
     multi: true
     },
-    HttpClient],
+    HttpClient,
+    AuthService,
+    ChessService,
+    BingoService,
+    UserGuard,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

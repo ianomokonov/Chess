@@ -29,6 +29,6 @@ export class AuthService{
 
     exit(){
         sessionStorage.removeItem('userToken');
-        this.router.navigate(['login']);
+        this.router.navigate(['/login']);
     }
 }

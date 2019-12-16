@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
+import { ChessService } from 'src/app/services/chess.service';
 
 @Component({
   selector: 'chess-field',
@@ -14,7 +15,7 @@ export class ChessFieldComponent implements OnInit {
   public possibleSteps = [];
   private currentColor: FigureColor;
   private dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
-  constructor() {
+  constructor( private cs: ChessService) {
     this.currentColor = FigureColor.White;
    }
 
