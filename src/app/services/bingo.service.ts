@@ -13,10 +13,10 @@ export class BingoService{
     }
 
     getGame(id: number){
-        return this.http.get(this.baseURL + '?Key=getGame&Id='+id);
+        return this.http.get<any>(this.baseURL + '?Key=get-game&Id='+id);
     }
 
     createGame(game){
-        return this.http.post<number>(this.baseURL + '?Key=createGame', game);
+        return this.http.post<number>(this.baseURL + '?Key=create-game', game);
     }
 }

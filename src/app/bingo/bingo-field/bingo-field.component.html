@@ -1,4 +1,4 @@
-<div class="m-auto">
+<div class="m-auto" *ngIf="cards.length">
     <div class="first mb-5">
         <bingo-card [current]="currentNumber" [numbers]="cards[0]"></bingo-card>
         <bingo-card [current]="currentNumber" [numbers]="cards[1]"></bingo-card>

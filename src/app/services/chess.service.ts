@@ -13,11 +13,11 @@ export class ChessService{
     }
 
     getGame(id: number){
-        return this.http.get<any>(this.baseURL + '?Key=getGame&Id='+id);
+        return this.http.get<any>(this.baseURL + '?Key=get-game&Id='+id);
     }
 
     getGameSteps(id: number){
-        return this.http.get<any>(this.baseURL + '?Key=getGame&Id='+id);
+        return this.http.get<any>(this.baseURL + '?Key=get-game&Id='+id);
     }
 
     createGame(game){

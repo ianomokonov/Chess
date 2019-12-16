@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { BingoService } from 'src/app/services/bingo.service';
 
 @Component({
   selector: 'bingo-field',
@@ -6,29 +7,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./bingo-field.component.less']
 })
 export class BingoFieldComponent implements OnInit {
+
+  @Input() gameId: number;
   cards = [];
   numbers = [];
   barrelNumbers = [];
   currentNumber = null;
-  constructor() { }
+  constructor( private bs: BingoService) { }
 
   ngOnInit() {
-    for(let i = 0; i < 9; i++){
-      let row = [];
-      for(let j = 0; j < 10; j++){
-        if(i == 0 && j == 0){
-          continue;
+    this.bs.getGame(this.gameId).subscribe( game => {
+      this.cards = game.cards;
+      for( let i = 1; i < 91; i++){
+        if(game.numbers.indexOf(i)<0){
+          this.barrelNumbers.push(i);
         }
-        row.push(i*10 + j);
-        this.barrelNumbers.push(i*10 + j);
-
       }
-      this.numbers.push(row)
-    }
-    this.numbers[8].push(90);
-    this.barrelNumbers.push(90);
-    this.genCards()
-    this.next();
+      this.next();
+    },
+    () => {
+      console.error('Игра не загружена!')
+      for(let i = 0; i < 9; i++){
+        let row = [];
+        for(let j = 0; j < 10; j++){
+          if(i == 0 && j == 0){
+            continue;
+          }
+          row.push(i*10 + j);
+          this.barrelNumbers.push(i*10 + j);
+  
+        }
+        this.numbers.push(row)
+      }
+      this.numbers[8].push(90);
+      this.barrelNumbers.push(90);
+      this.genCards()
+      this.next();
+    })
+    
     
   }
 
@@ -37,7 +53,6 @@ export class BingoFieldComponent implements OnInit {
       const nums = JSON.parse(JSON.stringify(this.numbers));
       let card = [];
       for(let j = 0; j<27; j+=3){
-        console.log(j)
         const number = j/3;
         let index = this.randomInteger(0, nums[number].length-1);
         card.push(nums[number][index]);
@@ -45,7 +60,6 @@ export class BingoFieldComponent implements OnInit {
         index = this.randomInteger(0, nums[number].length-1);
         card.push(nums[number][index]);
         nums[number].splice(index, 1);
-        console.log(!card[j] && !card[j+1])
         index = !card[j] && !card[j+1] ? 
           this.randomInteger(0, nums[number].length-1, false) : this.randomInteger(0, nums[number].length-1, false);
         card.push(nums[number][index]);

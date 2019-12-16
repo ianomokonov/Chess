@@ -3,6 +3,7 @@ import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
 import { ChessService } from 'src/app/services/chess.service';
 import { forkJoin } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'chess-field',
@@ -20,7 +21,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   public possibleSteps = [];
   private currentColor: FigureColor;
   public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
-  constructor( private cs: ChessService) {
+  constructor( private cs: ChessService, private router: Router) {
     this.currentColor = FigureColor.White;
   }
 
@@ -42,13 +43,18 @@ export class ChessFieldComponent implements OnInit, OnChanges {
       this.cs.getGame(this.gameId),
       this.cs.getGameSteps(this.gameId)
     ]).subscribe(([game, steps]) => {
-      this.currentColor = game.color;
-      this.figures = game.figures;
-      steps.forEach(x => {
-        const figure = this.figures.find(f => f.id === x.figureId);
-        figure.x = x.x;
-        figure.y = x.y;
-      })
+      if(game){
+        this.currentColor = game.color;
+        this.figures = game.figures;
+        steps.forEach(x => {
+          const figure = this.figures.find(f => f.id === x.figureId);
+          figure.x = x.x;
+          figure.y = x.y;
+        })
+      } else {
+        this.router.navigate(['choose']);
+      }
+      
     },
     error => { console.error('Игра не загружена с сервера!')})
   }
