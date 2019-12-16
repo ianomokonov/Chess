@@ -73,13 +73,24 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     if(!this.activeFigure){
       return;
     }
+    
     if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
-      this.cs.step({figureId: this.activeFigure.id, x: cell.x, y: cell.y})
-      this.activeFigure.x = cell.x;
-      this.activeFigure.y = cell.y;
-      this.activeFigure['active'] = false;
       this.possibleSteps = [];
-      this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+      this.cs.step({figureId: this.activeFigure.id, x: cell.x, y: cell.y}).subscribe(
+        ()=> {
+          this.activeFigure.x = cell.x;
+          this.activeFigure.y = cell.y;
+          this.activeFigure['active'] = false;
+          this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+        },
+        () => {
+          console.error('Ход не синхронизирован!')
+          this.activeFigure.x = cell.x;
+          this.activeFigure.y = cell.y;
+          this.activeFigure['active'] = false;
+          this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+        })
+      
     } else {
       this.activeFigure['active'] = false;
       this.possibleSteps = [];

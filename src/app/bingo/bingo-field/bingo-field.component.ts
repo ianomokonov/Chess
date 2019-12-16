@@ -51,18 +51,21 @@ export class BingoFieldComponent implements OnInit {
   genCards() {
     for(let i = 0; i< 4; i++){
       const nums = JSON.parse(JSON.stringify(this.numbers));
-      let card = [];
+      let card = {
+        id: i + 1,
+        numbers: []
+      };
       for(let j = 0; j<27; j+=3){
         const number = j/3;
         let index = this.randomInteger(0, nums[number].length-1);
-        card.push(nums[number][index]);
+        card.numbers.push(nums[number][index]);
         nums[number].splice(index, 1);
         index = this.randomInteger(0, nums[number].length-1);
-        card.push(nums[number][index]);
+        card.numbers.push(nums[number][index]);
         nums[number].splice(index, 1);
         index = !card[j] && !card[j+1] ? 
           this.randomInteger(0, nums[number].length-1, false) : this.randomInteger(0, nums[number].length-1, false);
-        card.push(nums[number][index]);
+        card.numbers.push(nums[number][index]);
         nums[number].splice(index, 1);
 
       }

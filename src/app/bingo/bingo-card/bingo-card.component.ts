@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { BingoService } from 'src/app/services/bingo.service';
 
 @Component({
   selector: 'bingo-card',
@@ -7,9 +8,10 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class BingoCardComponent implements OnInit {
   @Input() numbers: number[];
+  @Input() cardId: number;
   @Input() current: number;
   choosedIndexes: number[] = [];
-  constructor() { }
+  constructor( private bs: BingoService ) { }
 
   ngOnInit() {
 
@@ -17,7 +19,14 @@ export class BingoCardComponent implements OnInit {
 
   choose(index: number){
     if(this.current === this.numbers[index]){
-      this.choosedIndexes.push(index);
+      this.bs.step({cardId: this.cardId, index: index, value: this.current}).subscribe(x => {
+        this.choosedIndexes.push(index);
+      },
+      ()=> {
+        console.error('Ход не синхронизирован!')
+        this.choosedIndexes.push(index);
+      })
+      
     }
     
   }
