@@ -21,6 +21,7 @@ import { AuthService } from './services/auth.service';
 import { ChessService } from './services/chess.service';
 import { BingoService } from './services/bingo.service';
 import { UserGuard } from './guards/user.guard';
+import { WebsocketService } from './services/websockets.service';
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import { UserGuard } from './guards/user.guard';
     ChessService,
     BingoService,
     UserGuard,
+    WebsocketService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,8 +2,10 @@ import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
 import { ChessService } from 'src/app/services/chess.service';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { WebsocketService } from 'src/app/services/websockets.service';
 
 @Component({
   selector: 'chess-field',
@@ -20,8 +22,9 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   public activeFigure: Figure;
   public possibleSteps = [];
   private currentColor: FigureColor;
+  private socket: Subject<string>;
   public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
-  constructor( private cs: ChessService, private router: Router) {
+  constructor( private cs: ChessService, private router: Router, private ws:WebsocketService) {
     this.currentColor = FigureColor.White;
   }
 
@@ -39,6 +42,14 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField();
+    this.socket = <Subject<string>>this.ws.connect('ws://127.0.0.1:7777').pipe(
+    map((response: MessageEvent): string => {
+      let data = JSON.parse(response.data);
+      return data;
+    }));
+    this.socket.subscribe(x => {
+      this.figureGo(x);
+    })
     forkJoin([
       this.cs.getGame(this.gameId),
       this.cs.getGameSteps(this.gameId)
@@ -50,6 +61,12 @@ export class ChessFieldComponent implements OnInit, OnChanges {
           const figure = this.figures.find(f => f.id === x.figureId);
           figure.x = x.x;
           figure.y = x.y;
+        })
+        
+          
+
+        this.socket.subscribe(x => {
+          this.figureGo(x);
         })
       } else {
         this.router.navigate(['choose']);
@@ -67,6 +84,12 @@ export class ChessFieldComponent implements OnInit, OnChanges {
       }
       this.rows.push(row);
     }
+  }
+
+  figureGo(figure: any){
+    const f = this.figures.find(x => x.id = figure.id);
+    f.x = figure.x;
+    f.y = figure.y;
   }
 
   go(cell){
