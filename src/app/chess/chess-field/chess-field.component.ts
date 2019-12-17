@@ -22,7 +22,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   public activeFigure: Figure;
   public possibleSteps = [];
   private currentColor: FigureColor;
-  private socket: Subject<string>;
+  private socket: Subject<any>;
   public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
   constructor( private cs: ChessService, private router: Router, private ws:WebsocketService) {
     this.currentColor = FigureColor.White;
@@ -42,12 +42,13 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField();
-    this.socket = <Subject<string>>this.ws.connect('ws://127.0.0.1:7777').pipe(
+    this.socket = <Subject<any>>this.ws.connect('ws://127.0.0.1:7777').pipe(
     map((response: MessageEvent): string => {
       let data = JSON.parse(response.data);
       return data;
     }));
     this.socket.subscribe(x => {
+      console.log(x)
       this.figureGo(x);
     })
     forkJoin([
@@ -99,20 +100,11 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     
     if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
       this.possibleSteps = [];
-      this.cs.step({figureId: this.activeFigure.id, x: cell.x, y: cell.y}).subscribe(
-        ()=> {
-          this.activeFigure.x = cell.x;
-          this.activeFigure.y = cell.y;
-          this.activeFigure['active'] = false;
-          this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
-        },
-        () => {
-          console.error('Ход не синхронизирован!')
-          this.activeFigure.x = cell.x;
-          this.activeFigure.y = cell.y;
-          this.activeFigure['active'] = false;
-          this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
-        })
+      this.activeFigure.x = cell.x;
+        this.activeFigure.y = cell.y;
+        this.activeFigure['active'] = false;
+        this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+        this.socket.next({id: 2, x:cell.x, y:cell.y});
       
     } else {
       this.activeFigure['active'] = false;

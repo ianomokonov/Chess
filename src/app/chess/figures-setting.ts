@@ -29,6 +29,7 @@ export class FiguresSetting{
           color: FigureColor.Black
         },
         {
+          id: 2,
           x: 6,
           y: 0,
           img: '../../assets/figures/bN.png',

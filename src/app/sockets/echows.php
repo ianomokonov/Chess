@@ -21,13 +21,18 @@ while (true) {
         //принимаем новое соединение и производим рукопожатие:
         if (($connect = stream_socket_accept($socket, -1)) && $info = handshake($connect)) {
             $connects[] = $connect;//добавляем его в список необходимых для обработки
-            onOpen($connect, $info);//вызываем пользовательский сценарий
+            onOpen($connect, $info, count($connects));//вызываем пользовательский сценарий
         }
         unset($read[ array_search($socket, $read) ]);
     }
 
+    $all_data = null;
+    if(count($connects)<2){
+        continue;
+    }
     foreach($read as $connect) {//обрабатываем все соединения
         $data = fread($connect, 100000);
+        
 
         if (!$data) { //соединение было закрыто
             fclose($connect);
@@ -36,7 +41,8 @@ while (true) {
             continue;
         }
 
-        onMessage($connect, $data);//вызываем пользовательский сценарий
+        onMessage($connects[0], $data);//вызываем пользовательский сценарий
+        onMessage($connects[1], $data);//вызываем пользовательский сценарий
     }
 }
 
@@ -240,12 +246,13 @@ function decode($data)
 
 //пользовательские сценарии:
 
-function onOpen($connect, $info) {
+function onOpen($connect, $info, $c) {
     echo "open\n";
     fwrite($connect, encode(json_encode([
         'id' => 1,
         'x' => 0,
-        'y' => 2
+        'y' => 2,
+        'c' => $c
     ])));
 }
 

@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
     Name varchar(255) NOT NULL,
     Login varchar(255) NOT NULL,
-    Password varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS games (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS figures (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
     Type varchar(255) NOT NULL,
     Color varchar(255),
-    Img varchar(255) NOT NULL,
+    Img varchar(255) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS steps (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -39,38 +39,38 @@ INSERT INTO figures (Type, Color, Img, x0, y0)
 
 VALUES
 
-('Rook', 'Black', '../../assets/figures/bR.png',0,0),
-('Rook', 'Black', '../../assets/figures/bR.png',7,0),
-('Knight', 'Black', '../../assets/figures/bN.png',1,0),
-('Knight', 'Black', '../../assets/figures/bN.png',6,0),
-('Bishop', 'Black', '../../assets/figures/bB.png',2,0),
-('Bishop', 'Black', '../../assets/figures/bB.png',5,0),
-('King', 'Black', '../../assets/figures/bK.png',4,0),
-('Queen', 'Black', '../../assets/figures/bQ.png',3,0),
+('rook', 'black', '../../assets/figures/bR.png',0,0),
+('rook', 'black', '../../assets/figures/bR.png',7,0),
+('knight', 'black', '../../assets/figures/bN.png',1,0),
+('knight', 'black', '../../assets/figures/bN.png',6,0),
+('bishop', 'black', '../../assets/figures/bB.png',2,0),
+('bishop', 'black', '../../assets/figures/bB.png',5,0),
+('king', 'black', '../../assets/figures/bK.png',4,0),
+('queen', 'black', '../../assets/figures/bQ.png',3,0),
 
-('Rook', 'White', '../../assets/figures/wR.png',0,7),
-('Rook', 'White', '../../assets/figures/wR.png',7,7),
-('Knight', 'White', '../../assets/figures/wN.png',1,7),
-('Knight', 'White', '../../assets/figures/wN.png',6,7),
-('Bishop', 'White', '../../assets/figures/wB.png',2,7),
-('Bishop', 'White', '../../assets/figures/wB.png',5,7),
-('King', 'White', '../../assets/figures/wK.png',4,7),
-('Queen', 'White', '../../assets/figures/wQ.png',3,7),
+('rook', 'white', '../../assets/figures/wR.png',0,7),
+('rook', 'white', '../../assets/figures/wR.png',7,7),
+('knight', 'white', '../../assets/figures/wN.png',1,7),
+('knight', 'white', '../../assets/figures/wN.png',6,7),
+('bishop', 'white', '../../assets/figures/wB.png',2,7),
+('bishop', 'white', '../../assets/figures/wB.png',5,7),
+('king', 'white', '../../assets/figures/wK.png',4,7),
+('queen', 'white', '../../assets/figures/wQ.png',3,7),
 
-('Pawn', 'Black', '../../assets/figures/bP.png',0,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',1,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',2,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',3,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',4,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',5,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',6,1),
-('Pawn', 'Black', '../../assets/figures/bP.png',7,1),
+('pawn', 'black', '../../assets/figures/bP.png',0,1),
+('pawn', 'black', '../../assets/figures/bP.png',1,1),
+('pawn', 'black', '../../assets/figures/bP.png',2,1),
+('pawn', 'black', '../../assets/figures/bP.png',3,1),
+('pawn', 'black', '../../assets/figures/bP.png',4,1),
+('pawn', 'black', '../../assets/figures/bP.png',5,1),
+('pawn', 'black', '../../assets/figures/bP.png',6,1),
+('pawn', 'black', '../../assets/figures/bP.png',7,1),
 
-('Pawn', 'White', '../../assets/figures/wP.png',0,6),
-('Pawn', 'White', '../../assets/figures/wP.png',1,6),
-('Pawn', 'White', '../../assets/figures/wP.png',2,6),
-('Pawn', 'White', '../../assets/figures/wP.png',3,6),
-('Pawn', 'White', '../../assets/figures/wP.png',4,6),
-('Pawn', 'White', '../../assets/figures/wP.png',5,6),
-('Pawn', 'White', '../../assets/figures/wP.png',6,6),
-('Pawn', 'White', '../../assets/figures/wP.png',7,6)
+('pawn', 'white', '../../assets/figures/wP.png',0,6),
+('pawn', 'white', '../../assets/figures/wP.png',1,6),
+('pawn', 'white', '../../assets/figures/wP.png',2,6),
+('pawn', 'white', '../../assets/figures/wP.png',3,6),
+('pawn', 'white', '../../assets/figures/wP.png',4,6),
+('pawn', 'white', '../../assets/figures/wP.png',5,6),
+('pawn', 'white', '../../assets/figures/wP.png',6,6),
+('pawn', 'white', '../../assets/figures/wP.png',7,6)
