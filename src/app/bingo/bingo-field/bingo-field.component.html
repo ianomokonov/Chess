@@ -1,16 +1,16 @@
-<div class="m-auto">
+<div class="m-auto" *ngIf="cards.length">
     <div class="first mb-5">
-        <bingo-card></bingo-card>
-        <bingo-card></bingo-card>
+        <bingo-card [current]="currentNumber" [cardId]="cards[0].id" [numbers]="cards[0].numbers"></bingo-card>
+        <bingo-card [current]="currentNumber" [cardId]="cards[1].id" [numbers]="cards[1].numbers"></bingo-card>
     </div>
     <div class="barrel flex-center">
         <div class="btn btn-link">Назад</div>
-        <div class="number flex-center">32</div>
-        <div class="btn btn-link">Далее</div>
+        <div class="number flex-center">{{currentNumber}}</div>
+        <div class="btn btn-link" (click)="next()">Далее</div>
     </div>
     <div class="second mt-5">
-        <bingo-card></bingo-card>
-        <bingo-card></bingo-card>
+        <bingo-card [current]="currentNumber" [cardId]="cards[2].id" [numbers]="cards[2].numbers"></bingo-card>
+        <bingo-card [current]="currentNumber" [cardId]="cards[3].id" [numbers]="cards[3].numbers"></bingo-card>
     </div>  
 </div>
 

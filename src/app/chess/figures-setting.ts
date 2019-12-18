@@ -29,6 +29,7 @@ export class FiguresSetting{
           color: FigureColor.Black
         },
         {
+          id: 2,
           x: 6,
           y: 0,
           img: '../../assets/figures/bN.png',
@@ -133,6 +134,7 @@ export class FiguresSetting{
           color: FigureColor.White
         },
         {
+          id: 1,
           x: 0,
           y: 1,
           img: '../../assets/figures/bP.png',

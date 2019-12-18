@@ -1,22 +1,38 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, OnChanges } from '@angular/core';
 import { Figure, StepType, FigureColor, FigureType } from '../../models';
 import { FiguresSetting } from '../figures-setting';
+import { ChessService } from 'src/app/services/chess.service';
+import { forkJoin, Subject } from 'rxjs';
+import { Router } from '@angular/router';
+import { map } from 'rxjs/operators';
+import { WebsocketService } from 'src/app/services/websockets.service';
 
 @Component({
   selector: 'chess-field',
   templateUrl: './chess-field.component.html',
   styleUrls: ['./chess-field.component.less']
 })
-export class ChessFieldComponent implements OnInit {
+export class ChessFieldComponent implements OnInit, OnChanges {
+
+
+  @Input() gameId: number;
+
   public rows = []
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
   private currentColor: FigureColor;
-  private dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
-  constructor() {
+  private socket: Subject<any>;
+  public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
+  constructor( private cs: ChessService, private router: Router, private ws:WebsocketService) {
     this.currentColor = FigureColor.White;
-   }
+  }
+
+  ngOnChanges(){
+    if(this.rows.length){
+      this.ngOnInit();
+    }
+  }
 
   ngOnInit() {
     this.possibleSteps = [];
@@ -26,6 +42,39 @@ export class ChessFieldComponent implements OnInit {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField();
+    this.socket = <Subject<any>>this.ws.connect('ws://127.0.0.1:7777').pipe(
+    map((response: MessageEvent): string => {
+      let data = JSON.parse(response.data);
+      return data;
+    }));
+    this.socket.subscribe(x => {
+      console.log(x)
+      this.figureGo(x);
+    })
+    forkJoin([
+      this.cs.getGame(this.gameId),
+      this.cs.getGameSteps(this.gameId)
+    ]).subscribe(([game, steps]) => {
+      if(game){
+        this.currentColor = game.color;
+        this.figures = game.figures;
+        steps.forEach(x => {
+          const figure = this.figures.find(f => f.id === x.figureId);
+          figure.x = x.x;
+          figure.y = x.y;
+        })
+        
+          
+
+        this.socket.subscribe(x => {
+          this.figureGo(x);
+        })
+      } else {
+        this.router.navigate(['choose']);
+      }
+      
+    },
+    error => { console.error('Игра не загружена с сервера!')})
   }
 
   genField(){
@@ -38,16 +87,25 @@ export class ChessFieldComponent implements OnInit {
     }
   }
 
+  figureGo(figure: any){
+    const f = this.figures.find(x => x.id = figure.id);
+    f.x = figure.x;
+    f.y = figure.y;
+  }
+
   go(cell){
     if(!this.activeFigure){
       return;
     }
+    
     if(this.possibleSteps.indexOf(cell.x+','+cell.y)>-1){
-      this.activeFigure.x = cell.x;
-      this.activeFigure.y = cell.y;
-      this.activeFigure['active'] = false;
       this.possibleSteps = [];
-      this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+      this.activeFigure.x = cell.x;
+        this.activeFigure.y = cell.y;
+        this.activeFigure['active'] = false;
+        this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
+        this.socket.next({id: 2, x:cell.x, y:cell.y});
+      
     } else {
       this.activeFigure['active'] = false;
       this.possibleSteps = [];

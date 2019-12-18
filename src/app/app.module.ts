@@ -14,6 +14,15 @@ import { ChessWinComponent } from './chess/chess-win/chess-win.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BingoCardComponent } from './bingo/bingo-card/bingo-card.component';
 
+//HTTP запросы
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS  } from '@angular/common/http';
+import { ApiInterceptor } from './api.interceptor';
+import { AuthService } from './services/auth.service';
+import { ChessService } from './services/chess.service';
+import { BingoService } from './services/bingo.service';
+import { UserGuard } from './guards/user.guard';
+import { WebsocketService } from './services/websockets.service';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,10 +40,23 @@ import { BingoCardComponent } from './bingo/bingo-card/bingo-card.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
     
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: ApiInterceptor,
+    multi: true
+    },
+    HttpClient,
+    AuthService,
+    ChessService,
+    BingoService,
+    UserGuard,
+    WebsocketService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
