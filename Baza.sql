@@ -82,7 +82,7 @@ CONSTRAINT b_fk FOREIGN KEY(GameId) REFERENCES games(Id) ON DELETE CASCADE
 ); 
 CREATE TABLE IF NOT EXISTS bingocardcells ( 
 CardId int(10) PRIMARY KEY AUTO_INCREMENT, 
-Inex int(10) NOT NULL, 
+Position int(10) NOT NULL, 
 Value int(10), 
 Closed bit(1), 
 CONSTRAINT dc_fk FOREIGN KEY(CardId) REFERENCES bingocards(Id) ON DELETE CASCADE);
