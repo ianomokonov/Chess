@@ -3,7 +3,7 @@ CREATE TABLE IF NOT EXISTS users (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
     Name varchar(255) NOT NULL,
     Login varchar(255) NOT NULL,
-    Password varchar(255) NOT NULL,
+    Password varchar(255) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS games (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS figures (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
     Type varchar(255) NOT NULL,
     Color varchar(255),
-    Img varchar(255) NOT NULL,
+    Img varchar(255) NOT NULL
 );
 CREATE TABLE IF NOT EXISTS steps (
     Id int(10) PRIMARY KEY AUTO_INCREMENT,
@@ -74,3 +74,15 @@ VALUES
 ('Pawn', 'White', '../../assets/figures/wP.png',5,6),
 ('Pawn', 'White', '../../assets/figures/wP.png',6,6),
 ('Pawn', 'White', '../../assets/figures/wP.png',7,6)
+
+CREATE TABLE IF NOT EXISTS bingocards (
+    Id int(10) PRIMARY KEY AUTO_INCREMENT,
+    GameId int(10) NOT NULL,
+    CONSTRAINT b_fk FOREIGN KEY(GameId) REFERENCES games(Id) ON DELETE CASCADE
+);
+CREATE TABLE IF NOT EXISTS bingocardcells (
+    CardId int(10) PRIMARY KEY AUTO_INCREMENT,
+    Inex int(10) NOT NULL,
+    Value int(10),
+    Closed bit(1),
+    CONSTRAINT dc_fk FOREIGN KEY(CardId) REFERENCES bingocards(Id) ON DELETE CASCADE);
