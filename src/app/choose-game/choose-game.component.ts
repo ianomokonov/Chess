@@ -21,6 +21,7 @@ export class ChooseGameComponent implements OnInit {
     this.chessService.white = true;
     this.chooseForm = this._fb.group({
       type: [GameType.Chess, Validators.required],
+      color: [FigureColor.White, Validators.required],
       gameId: [null]
     })
   }
