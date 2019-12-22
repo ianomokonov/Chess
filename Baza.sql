@@ -73,7 +73,7 @@ VALUES
 ('pawn', 'white', '../../assets/figures/wP.png',4,6),
 ('pawn', 'white', '../../assets/figures/wP.png',5,6),
 ('pawn', 'white', '../../assets/figures/wP.png',6,6),
-('pawn', 'white', '../../assets/figures/wP.png',7,6)
+('pawn', 'white', '../../assets/figures/wP.png',7,6);
 
 CREATE TABLE IF NOT EXISTS bingocards ( 
 Id int(10) PRIMARY KEY AUTO_INCREMENT, 

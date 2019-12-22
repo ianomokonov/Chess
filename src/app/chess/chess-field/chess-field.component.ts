@@ -42,36 +42,37 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField();
-    this.socket = <Subject<any>>this.ws.connect('ws://127.0.0.1:7777').pipe(
-    map((response: MessageEvent): string => {
-      let data = JSON.parse(response.data);
-      return data;
-    }));
-    this.socket.subscribe(x => {
+    this.ws.socket.next({key: 'getGame', id: this.gameId});
+    this.ws.socket.subscribe(x => {
       console.log(x)
-      this.figureGo(x);
+      // this.figureGo(x);
     });
-    forkJoin([
-      this.cs.getGame(this.gameId),
-      this.cs.getGameSteps(this.gameId)
-    ]).subscribe(([game, steps]) => {
-      if(game){
-        this.currentColor = game.color;
-        this.figures = game.figures;
-        steps.forEach(x => {
-          const figure = this.figures.find(f => f.id === x.figureId);
-          figure.x = x.x;
-          figure.y = x.y;
-        })
-        this.socket.subscribe(x => {
-          this.figureGo(x);
-        })
-      } else {
-        this.router.navigate(['choose']);
-      }
+    setTimeout(x => {
+      this.ws.socket.next({key: 'getGame', id: this.gameId});
+    }, 100);
+    
+    
+    // forkJoin([
+    //   this.cs.getGame(this.gameId),
+    //   this.cs.getGameSteps(this.gameId)
+    // ]).subscribe(([game, steps]) => {
+    //   if(game){
+    //     this.currentColor = game.color;
+    //     this.figures = game.figures;
+    //     steps.forEach(x => {
+    //       const figure = this.figures.find(f => f.id === x.figureId);
+    //       figure.x = x.x;
+    //       figure.y = x.y;
+    //     })
+    //     // this.ws.socket.subscribe(x => {
+    //     //   this.figureGo(x);
+    //     // })
+    //   } else {
+    //     this.router.navigate(['choose']);
+    //   }
       
-    },
-    error => { console.error('Игра не загружена с сервера!')})
+    // },
+    // error => { console.error('Игра не загружена с сервера!')})
   }
 
   genField(){
@@ -101,7 +102,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
         this.activeFigure.y = cell.y;
         this.activeFigure['active'] = false;
         this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
-        this.socket.next({id: 2, x:cell.x, y:cell.y});
+        this.ws.socket.next({id: 2, x:cell.x, y:cell.y});
       
     } else {
       this.activeFigure['active'] = false;

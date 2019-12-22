@@ -19,13 +19,13 @@ export class BingoCardComponent implements OnInit {
 
   choose(index: number){
     if(this.current === this.numbers[index]){
-      this.bs.step({cardId: this.cardId, index: index, value: this.current}).subscribe(x => {
-        this.choosedIndexes.push(index);
-      },
-      ()=> {
-        console.error('Ход не синхронизирован!')
-        this.choosedIndexes.push(index);
-      })
+      // this.bs.step({cardId: this.cardId, index: index, value: this.current}).subscribe(x => {
+      //   this.choosedIndexes.push(index);
+      // },
+      // ()=> {
+      //   console.error('Ход не синхронизирован!')
+      //   this.choosedIndexes.push(index);
+      // })
       
     }
     

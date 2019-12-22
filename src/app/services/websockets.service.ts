@@ -1,9 +1,22 @@
 import { Injectable } from "@angular/core";
 import * as Rx from "rxjs";
+import { map } from 'rxjs/operators';
 
 @Injectable()
 export class WebsocketService {
-  constructor() {}
+
+  public socket:Rx.Subject<any>;
+
+  constructor() {
+    this.socket = <Rx.Subject<any>>this.connect('ws://127.0.0.1:7777').pipe(
+    map((response: MessageEvent): any => {
+      if(response.data){
+        return JSON.parse(response.data);
+      }
+      return response.data;
+    }));
+    console.log(this.socket)
+  }
 
   private subject: Rx.Subject<MessageEvent>;
 
