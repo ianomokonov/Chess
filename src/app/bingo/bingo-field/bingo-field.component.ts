@@ -14,6 +14,7 @@ export class BingoFieldComponent implements OnInit {
   cards = [];
   myCards = [];
   numbers = [];
+  quariesCount = 0;
   barrelNumbers = [];
   playerId = 1;
   currentNumber = null;
@@ -41,7 +42,10 @@ export class BingoFieldComponent implements OnInit {
        console.log(x);
        if(x.Cards){
         if(x.Cards.filter(c => c.PlayerId == this.playerId).length<2){
-          this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId, numbers: this.genCard() }});
+          if(this.quariesCount < 2){
+            this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId, numbers: this.genCard() }});
+          }
+          this.quariesCount++;
         }else{
           this.cards = x.Cards.filter(c => c.PlayerId != this.playerId).map(c => {
             c.Cells = c.Cells.map(s => s.Value ? +s.Value : null);
