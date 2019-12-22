@@ -11,19 +11,20 @@ export class BingoCardComponent implements OnInit {
   @Input() numbers: number[];
   @Input() cardId: number;
   @Input() current: number;
-  choosedIndexes: number[] = [];
+  @Input() choosedIndexes: number[] = [];
   constructor( private bs: BingoService, private ws: WebsocketService ) { }
 
   ngOnInit() {
-    this.ws.socket.subscribe(x => {
-      if(x && x.key){
-        switch(x.key){
-          case 'bingo-step': {
-            this.choosedIndexes.push(x.position);
-          }
-        }
-      }
-    })
+    // this.ws.socket.subscribe(x => {
+    //   if(x && x.key){
+    //     switch(x.key){
+    //       case 'bingo-step': {
+    //         this.choosedIndexes.push(x.position);
+    //         break;
+    //       }
+    //     }
+    //   }
+    // })
   }
 
   choose(index: number){

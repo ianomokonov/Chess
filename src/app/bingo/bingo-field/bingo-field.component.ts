@@ -14,9 +14,10 @@ export class BingoFieldComponent implements OnInit {
   cards = [];
   myCards = [];
   numbers = [];
+  choosedIndexes: any = {};
   quariesCount = 0;
   barrelNumbers = [];
-  playerId = 1;
+  playerId = 2;
   currentNumber = null;
   constructor( private ws: WebsocketService) { 
     for(let i = 0; i < 9; i++){
@@ -59,6 +60,15 @@ export class BingoFieldComponent implements OnInit {
               if(!this.barrelNumbers.length){
                 alert('The end!');
               }
+              break;
+            }
+            case 'bingo-step': {
+              if(!this.choosedIndexes[`card${x.cardId}`]){
+                this.choosedIndexes[`card${x.cardId}`] = [];
+              }
+              this.choosedIndexes[`card${x.cardId}`].push(x.position);
+              console.log(x)
+              break;
             }
           }
         }

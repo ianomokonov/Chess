@@ -8,7 +8,7 @@
         <div class="btn btn-link" (click)="next()">Далее</div>
     </div>
     <div class="second mt-5">
-        <bingo-card [current]="currentNumber" *ngFor="let card of myCards" [cardId]="card.Id" [numbers]="card.Cells"></bingo-card>
+        <bingo-card [current]="currentNumber" [choosedIndexes]="choosedIndexes['card'+card.Id]" *ngFor="let card of myCards" [cardId]="card.Id" [numbers]="card.Cells"></bingo-card>
     </div>  
 </div>
 
