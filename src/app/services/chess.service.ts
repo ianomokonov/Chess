@@ -5,11 +5,15 @@ import { HttpClient } from '@angular/common/http';
 export class ChessService{
     userId: number;
     white: boolean = true;
-    private readonly baseURL = 'http://localhost/chess/chessController.php';
+    private readonly baseURL = 'http://localhost/chess/gameController.php';
     constructor( private http: HttpClient ){}
 
-    step(step){
-        return this.http.post(this.baseURL + '?Key=step', step);
+    addStep(step){
+        return this.http.post(this.baseURL + '?Key=add-step', step);
+    }
+
+    addGame(game){
+        return this.http.post(this.baseURL + '?Key=add-game', game);
     }
 
     getGame(id: number){
@@ -17,10 +21,14 @@ export class ChessService{
     }
 
     getGameSteps(id: number){
-        return this.http.get<any>(this.baseURL + '?Key=get-game&Id='+id);
+        return this.http.get<any>(this.baseURL + '?Key=get-step&Id='+id);
     }
 
     createGame(game){
-        return this.http.post<number>(this.baseURL + '?Key=createGame', game);
+        return this.http.post(this.baseURL + '?Key=add-game', game);
+    }
+
+    joinGame(player){
+        return this.http.post(this.baseURL + '?Key=join-game', player);
     }
 }

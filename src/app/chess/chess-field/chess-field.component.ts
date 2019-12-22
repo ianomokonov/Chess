@@ -50,7 +50,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.socket.subscribe(x => {
       console.log(x)
       this.figureGo(x);
-    })
+    });
     forkJoin([
       this.cs.getGame(this.gameId),
       this.cs.getGameSteps(this.gameId)
@@ -63,9 +63,6 @@ export class ChessFieldComponent implements OnInit, OnChanges {
           figure.x = x.x;
           figure.y = x.y;
         })
-        
-          
-
         this.socket.subscribe(x => {
           this.figureGo(x);
         })
