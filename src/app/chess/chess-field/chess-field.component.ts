@@ -17,12 +17,13 @@ export class ChessFieldComponent implements OnInit, OnChanges {
 
   @Input() gameId: number;
 
-  public rows = []
+  public rows = [];
+  private userId = 2;
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
   private currentColor: FigureColor;
-  private socket: Subject<any>;
+  private playerColor: FigureColor;
   public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
   constructor( private cs: ChessService, private router: Router, private ws:WebsocketService) {
     this.currentColor = FigureColor.White;
@@ -44,14 +45,33 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.genField()
     this.ws.socket.subscribe(x => {
       console.log(x)
+      if(x.Game){
+        if(x.Game.FirstPlayerId == this.userId){
+          this.playerColor = x.Game.Color
+        } else {
+          this.playerColor = x.Game.Color == FigureColor.White ? FigureColor.Black : FigureColor.White;
+        }
+      }
       if(x.Figures){
-        this.figures = x.Figures.map(f => {
+        this.figures = (x.Figures as Figure[]).map(f => {
           f.alive = true;
+          f.x = +f.x;
+          if(this.playerColor == FigureColor.Black){
+            f.y = 7 - f.y;
+          } else {
+            f.y = +f.y;
+          }
+          
+          f.reverse = f.Color == this.playerColor && f.Type == FigureType.Pawn;
+          
           return f;
         });
         console.log(this.figures);
       }
-      // this.figureGo(x);
+      if(x.Id){
+        this.figureGo(x);
+      }
+      
     });
     setTimeout(x => {
       this.ws.socket.next({key: 'get-game', id: this.gameId});
@@ -92,7 +112,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   }
 
   figureGo(figure: any){
-    const f = this.figures.find(x => x.id == figure.id);
+    const f = this.figures.find(x => x.Id == figure.Id);
     f.x = figure.x;
     f.y = figure.y;
   }
@@ -108,7 +128,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
         this.activeFigure.y = cell.y;
         this.activeFigure['active'] = false;
         this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
-        this.ws.socket.next({id: 2, x:cell.x, y:cell.y});
+        this.ws.socket.next({id: this.activeFigure.Id, x:cell.x, y:cell.y});
       
     } else {
       this.activeFigure['active'] = false;
@@ -117,7 +137,8 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   }
 
   take(figure: Figure){
-    if(figure.Color !== this.currentColor){
+    console.log([figure.Color, this.playerColor])
+    if(figure.Color !== this.playerColor || figure.Color !== this.currentColor){
       if(this.possibleSteps.indexOf(`${figure.x},${figure.y}`)>-1){
         
         figure.alive = false;
@@ -139,11 +160,13 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     figure.active = !figure.active;
     this.activeFigure = figure;
 
-    const rule = FiguresSetting.rules.find(x => x.Type === figure.Type);
+    const rule = FiguresSetting.rules.find(x => x.Type == figure.Type);
+    console.log(rule)
+    console.log(this.activeFigure)
     this.possibleSteps = [];
     if(rule.steps){
       rule.steps.forEach(s => {
-        
+        console.log(!s.if_y || s.if_y.indexOf(this.activeFigure.y)>-1)
         if(!s.if_y || s.if_y.indexOf(this.activeFigure.y)>-1){
           let pos = null;
           if(figure.reverse){
@@ -153,8 +176,9 @@ export class ChessFieldComponent implements OnInit, OnChanges {
             
           }
           let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
+          console.log(pos)
           if(f){
-            if(f.Color !== this.activeFigure.Color && !rule.kill){
+            if(f.Color != this.activeFigure.Color && !rule.kill){
               this.possibleSteps.push(`${pos.x},${pos.y}`);
             }
           } else {

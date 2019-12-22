@@ -4,7 +4,7 @@ export interface Cell{
 }
 
 export class Figure{
-    id?: number;
+    Id?: number;
     x?: number;
     y?: number;
     Img: string;
