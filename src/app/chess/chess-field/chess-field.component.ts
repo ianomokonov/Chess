@@ -18,7 +18,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   @Input() gameId: number;
 
   public rows = [];
-  private userId = 1;
+  private userId = 2;
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
