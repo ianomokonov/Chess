@@ -4,7 +4,7 @@ import { FiguresSetting } from '../figures-setting';
 import { ChessService } from 'src/app/services/chess.service';
 import { forkJoin, Subject } from 'rxjs';
 import { Router } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { WebsocketService } from 'src/app/services/websockets.service';
 
 @Component({
@@ -18,7 +18,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   @Input() gameId: number;
 
   public rows = [];
-  private userId = 1;
+  private userId = 2;
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
@@ -43,7 +43,9 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.rows = [];
     this.dead = { white: [], black: [] };
     this.genField()
-    this.ws.socket.subscribe(x => {
+    this.ws.socket.pipe(
+      filter(vl => vl)
+     ).subscribe(x => {
       console.log(x)
       if(x.Game){
         if(x.Game.FirstPlayerId == this.userId){
@@ -55,11 +57,13 @@ export class ChessFieldComponent implements OnInit, OnChanges {
       if(x.Figures){
         this.figures = (x.Figures as Figure[]).map(f => {
           f.alive = true;
-          f.x = +f.x;
+          
           if(this.playerColor == FigureColor.Black){
             f.y = 7 - f.y;
+            f.x = 7 - f.x;
           } else {
             f.y = +f.y;
+            f.x = +f.x;
           }
           
           f.reverse = f.Color == this.playerColor && f.Type == FigureType.Pawn;
@@ -118,11 +122,15 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   }
 
   figureGo(figure: any){
-    const f = this.figures.find(x => x.Id == figure.Id);
-    f.x = figure.x;
-    f.y = figure.y;
+    console.log(figure)
+    const f = this.figures.find(x => x.Id == figure.id);
+    console.log(figure)
+    
+    
     if(figure.color != this.playerColor){
       this.currentColor = this.playerColor;
+      f.x = 7-figure.x;
+      f.y = 7-figure.y;
     }
   }
 
