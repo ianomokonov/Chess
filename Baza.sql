@@ -76,13 +76,18 @@ VALUES
 ('pawn', 'white', '../../assets/figures/wP.png',7,6);
 
 CREATE TABLE IF NOT EXISTS bingocards ( 
-Id int(10) PRIMARY KEY AUTO_INCREMENT, 
-GameId int(10) NOT NULL, 
-CONSTRAINT b_fk FOREIGN KEY(GameId) REFERENCES games(Id) ON DELETE CASCADE 
+    Id int(10) PRIMARY KEY AUTO_INCREMENT, 
+    GameId int(10) NOT NULL,
+    PlayerId int(10) NOT NULL,
+    
+    CONSTRAINT bp_fk FOREIGN KEY(PlayerId) REFERENCES users(Id) ON DELETE CASCADE,
+    CONSTRAINT b_fk FOREIGN KEY(GameId) REFERENCES games(Id) ON DELETE CASCADE 
 ); 
 CREATE TABLE IF NOT EXISTS bingocardcells ( 
-CardId int(10) PRIMARY KEY AUTO_INCREMENT, 
-Position int(10) NOT NULL, 
-Value int(10), 
-Closed bit(1), 
-CONSTRAINT dc_fk FOREIGN KEY(CardId) REFERENCES bingocards(Id) ON DELETE CASCADE);
+    CardId int(10), 
+    Position int(10) NOT NULL, 
+    Value int(10), 
+    Closed bit(1) DEFAULT b'0', 
+    CONSTRAINT pk_bc PRIMARY KEY(CardId, Position),
+    CONSTRAINT dc_fk FOREIGN KEY(CardId) REFERENCES bingocards(Id) ON DELETE CASCADE
+);

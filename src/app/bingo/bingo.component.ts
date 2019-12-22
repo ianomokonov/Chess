@@ -16,6 +16,7 @@ export class BingoComponent implements OnInit {
     this.route.params.subscribe(x => {
       this.gameId = x['id'];
     })
+    
   }
 
 }
