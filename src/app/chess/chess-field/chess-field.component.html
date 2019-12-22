@@ -19,7 +19,7 @@
         <div class="dead">
             <div 
             class="figure" 
-            *ngFor="let figure of dead.white"  
+            *ngFor="let figure of playerColor == 'white' ? dead.white : dead.black"
             [ngStyle]="{'background-image':'url('+figure.Img+')'}"
             >
             </div>
@@ -28,8 +28,8 @@
         <div class="dead">
             <div 
             class="figure" 
-            *ngFor="let figure of dead.black"  
-            [ngStyle]="{'background-image':'url('+figure.img+')'}"
+            *ngFor="let figure of playerColor == 'white' ? dead.black : dead.white"  
+            [ngStyle]="{'background-image':'url('+figure.Img+')'}"
             >
         </div>
 
