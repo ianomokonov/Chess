@@ -79,7 +79,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
             break;
           }
           case 'kill': {
-            const figureIndex = this.figures.findIndex(x => x.Id == x.Id)
+            const figureIndex = this.figures.findIndex(f => f.Id == x.id)
             this.figures[figureIndex].alive = false;
             this.dead[this.figures[figureIndex].Color].push(this.figures[figureIndex]);
             this.figures.splice(figureIndex, 1);
