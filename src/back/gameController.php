@@ -9,32 +9,32 @@ function produce($data){
     {
         switch ($data->key) {
             case 'get-game':
-                return json_encode($ctxt->getGame($data->Id));
+                return json_encode($ctxt->getGame($data->id));
                 
             case 'get-step':
                 return json_encode($ctxt->getStep($data->Id));
                 
             case 'add-step':
-                $b = $data['Value'];
+                $b = $data->value;
                 // return json_encode($ctxt->addStep($data['Login'], $data['Password'], $b));
                 return json_encode($ctxt->addStep($b));
                 
             case 'add-game':
-                $b = $data['Value'];
+                $b = $data->value;
                 // return json_encode($ctxt->createGame($data['Login'], $data['Password'], $b));
                 return json_encode($ctxt->addGame($b));
                 
             case 'join-game':
-                $b = $data['Value'];
+                $b = $data->value;
                 return json_encode($ctxt->addPlayer($b));
                 
             case 'add-card':
-                $b = $data['Value'];
+                $b = $data->value;
                 // return json_encode($ctxt->addCard($data['Login'], $data['Password'], $b));
-                return json_encode($ctxt->addCard($b));
+                return json_encode($ctxt->addCards($b));
                 
             case 'add-cells':
-                $b = $data['Value'];
+                $b = $data->value;
                 // return json_encode($ctxt->addCardCells($data['Login'], $data['Password'], $b));
                 return json_encode($ctxt->addCardCells($b));
                 
