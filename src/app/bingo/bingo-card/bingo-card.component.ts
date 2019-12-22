@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { BingoService } from 'src/app/services/bingo.service';
+import { WebsocketService } from 'src/app/services/websockets.service';
 
 @Component({
   selector: 'bingo-card',
@@ -11,21 +12,23 @@ export class BingoCardComponent implements OnInit {
   @Input() cardId: number;
   @Input() current: number;
   choosedIndexes: number[] = [];
-  constructor( private bs: BingoService ) { }
+  constructor( private bs: BingoService, private ws: WebsocketService ) { }
 
   ngOnInit() {
-
+    this.ws.socket.subscribe(x => {
+      if(x && x.key){
+        switch(x.key){
+          case 'bingo-step': {
+            this.choosedIndexes.push(x.position);
+          }
+        }
+      }
+    })
   }
 
   choose(index: number){
     if(this.current === this.numbers[index]){
-      // this.bs.step({cardId: this.cardId, index: index, value: this.current}).subscribe(x => {
-      //   this.choosedIndexes.push(index);
-      // },
-      // ()=> {
-      //   console.error('Ход не синхронизирован!')
-      //   this.choosedIndexes.push(index);
-      // })
+     this.ws.socket.next({key: 'bingo-step', cardId: this.cardId, position: index});
       
     }
     
