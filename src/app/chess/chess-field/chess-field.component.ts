@@ -88,7 +88,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   }
 
   figureGo(figure: any){
-    const f = this.figures.find(x => x.id = figure.id);
+    const f = this.figures.find(x => x.id == figure.id);
     f.x = figure.x;
     f.y = figure.y;
   }
