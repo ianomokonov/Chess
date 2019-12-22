@@ -18,7 +18,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   @Input() gameId: number;
 
   public rows = [];
-  private userId = 2;
+  private userId = 1;
   public figures: Figure[];
   public activeFigure: Figure;
   public possibleSteps = [];
@@ -77,6 +77,12 @@ export class ChessFieldComponent implements OnInit, OnChanges {
           case 'step':{
             this.figureGo(x);
             break;
+          }
+          case 'kill': {
+            const figureIndex = this.figures.findIndex(x => x.Id == x.Id)
+            this.figures[figureIndex].alive = false;
+            this.dead[this.figures[figureIndex].Color].push(this.figures[figureIndex]);
+            this.figures.splice(figureIndex, 1);
           }
         }
         
@@ -158,10 +164,8 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     if(figure.Color !== this.playerColor || figure.Color !== this.currentColor){
       if(this.possibleSteps.indexOf(`${figure.x},${figure.y}`)>-1){
         
-        figure.alive = false;
-        this.dead[figure.Color].push(figure);
-        this.figures.splice(this.figures.findIndex(x => x.x == figure.x && x.y == figure.y), 1);
         
+        this.ws.socket.next({key: 'kill', id: figure.Id, color: figure.Color});
         if(figure.Type === FigureType.King){
           alert(this.currentColor + ' win!' )
           this.ngOnInit();
