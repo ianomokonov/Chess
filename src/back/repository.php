@@ -4,7 +4,7 @@ class DataBase {
     public $db;
     public function __construct()
     {
-        $this->db = new PDO('mysql:host=localhost;dbname=chess&bingo; charset=UTF8','root','');
+        $this->db = new PDO('mysql:host=localhost;dbname=games; charset=UTF8','root','');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
     }
 
@@ -55,11 +55,20 @@ class DataBase {
         return $this->db->lastInsertId();
     }
 
+    private function getFigures(){
+        $sth = $this->db->query("SELECT * FROM figures");
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Figure');
+        return $sth->fetchAll();
+    }
+
     public function getGame($id){
+        return array("game" => $game, "Figures" => $this->getFigures());
         $sth = $this->db->prepare("SELECT * FROM games WHERE Id=?");
         $sth->execute(array($id));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Game');
-        return $sth->fetch();
+        $game = $sth->fetch();
+        $game->Figures = $this->getFigures();
+        return $game;
     }
     
     public function addStep($step){

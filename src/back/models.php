@@ -4,6 +4,8 @@ class Game{
     public $Type;
     public $FirstPlayerId;
     public $SecondPlayerId;
+
+    public $Figures;
 }
 
 class Step{
@@ -14,6 +16,15 @@ class Step{
     public $y;
     public $FigureId;
     public $Number;
+}
+
+class Figure{
+    public $Id;
+    public $x;
+    public $y;
+    public $Type;
+    public $Color;
+    public $Img;
 }
 
 class Bingo{

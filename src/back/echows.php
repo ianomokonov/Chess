@@ -1,5 +1,5 @@
 <?php
-
+require 'gameController.php';
 $socket = stream_socket_server("127.0.0.1:7777", $errno, $errstr);
 
 if (!$socket) {
@@ -41,12 +41,39 @@ while (true) {
             continue;
         }
 
-        onMessage($connects[0], $data);//вызываем пользовательский сценарий
-        onMessage($connects[1], $data);//вызываем пользовательский сценарий
+        foreach($connects as $con){
+            onMessage($con, $data);//вызываем пользовательский сценарий
+        }
     }
 }
 
 fclose($server);
+
+//пользовательские сценарии:
+
+function onOpen($connect, $info, $c) {
+    echo "open\n";
+    fwrite($connect, encode(json_encode([
+        'id' => 1,
+        'x' => 0,
+        'y' => 2,
+        'c' => $c
+    ])));
+    // fwrite($connect, encode($c));
+}
+
+
+function onClose($connect) {
+    echo "close\n";
+}
+
+function onMessage($connect, $data) {
+    $d = decode($data)['payload'];
+    // fwrite($connect, encode($d));
+    if($d['key']){
+        fwrite($connect, encode(produce(json_decode($d))));
+    }
+}
 
 function handshake($connect) {
     $info = array();
@@ -244,25 +271,5 @@ function decode($data)
     return $decodedData;
 }
 
-//пользовательские сценарии:
 
-function onOpen($connect, $info, $c) {
-    echo "open\n";
-    // fwrite($connect, encode(json_encode([
-    //     'id' => 1,
-    //     'x' => 0,
-    //     'y' => 2,
-    //     'c' => $c
-    // ])));
-    fwrite($connect, encode($c));
-}
-
-function onClose($connect) {
-    echo "close\n";
-}
-
-function onMessage($connect, $data) {
-    echo decode($data)['payload'] . "\n";
-    fwrite($connect, encode(decode($data)['payload']));
-}
 ?>

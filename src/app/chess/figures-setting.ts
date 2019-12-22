@@ -7,275 +7,275 @@ export class FiguresSetting{
         {
           x: 0,
           y: 0,
-          img: '../../assets/figures/bR.png',
+          Img: '../../assets/figures/bR.png',
           alive: true,
-          type: FigureType.Rook,
-          color: FigureColor.Black
+          Type: FigureType.Rook,
+          Color: FigureColor.Black
         },
         {
           x: 7,
           y: 0,
-          img: '../../assets/figures/bR.png',
+          Img: '../../assets/figures/bR.png',
           alive: true,
-          type: FigureType.Rook,
-          color: FigureColor.Black
+          Type: FigureType.Rook,
+          Color: FigureColor.Black
         },
         {
           x: 1,
           y: 0,
-          img: '../../assets/figures/bN.png',
+          Img: '../../assets/figures/bN.png',
           alive: true,
-          type: FigureType.Knight,
-          color: FigureColor.Black
+          Type: FigureType.Knight,
+          Color: FigureColor.Black
         },
         {
           id: 2,
           x: 6,
           y: 0,
-          img: '../../assets/figures/bN.png',
+          Img: '../../assets/figures/bN.png',
           alive: true,
-          type: FigureType.Knight,
-          color: FigureColor.Black
+          Type: FigureType.Knight,
+          Color: FigureColor.Black
         },
         {
           x: 2,
           y: 0,
-          img: '../../assets/figures/bB.png',
+          Img: '../../assets/figures/bB.png',
           alive: true,
-          type: FigureType.Bishop,
-          color: FigureColor.Black
+          Type: FigureType.Bishop,
+          Color: FigureColor.Black
         },
         {
           x: 5,
           y: 0,
-          img: '../../assets/figures/bB.png',
+          Img: '../../assets/figures/bB.png',
           alive: true,
-          type: FigureType.Bishop,
-          color: FigureColor.Black
+          Type: FigureType.Bishop,
+          Color: FigureColor.Black
         },
         {
           x: 4,
           y: 0,
-          img: '../../assets/figures/bK.png',
+          Img: '../../assets/figures/bK.png',
           alive: true,
-          type: FigureType.King,
-          color: FigureColor.Black
+          Type: FigureType.King,
+          Color: FigureColor.Black
         },
         {
           x: 3,
           y: 0,
-          img: '../../assets/figures/bQ.png',
+          Img: '../../assets/figures/bQ.png',
           alive: true,
-          type: FigureType.Queen,
-          color: FigureColor.Black
+          Type: FigureType.Queen,
+          Color: FigureColor.Black
         },
         {
           x: 0,
           y: 7,
-          img: '../../assets/figures/wR.png',
+          Img: '../../assets/figures/wR.png',
           alive: true,
-          type: FigureType.Rook,
-          color: FigureColor.White
+          Type: FigureType.Rook,
+          Color: FigureColor.White
         },
         {
           x: 7,
           y: 7,
-          img: '../../assets/figures/wR.png',
+          Img: '../../assets/figures/wR.png',
           alive: true,
-          type: FigureType.Rook,
-          color: FigureColor.White
+          Type: FigureType.Rook,
+          Color: FigureColor.White
         },
         {
           x: 1,
           y: 7,
-          img: '../../assets/figures/wN.png',
+          Img: '../../assets/figures/wN.png',
           alive: true,
-          type: FigureType.Knight,
-          color: FigureColor.White
+          Type: FigureType.Knight,
+          Color: FigureColor.White
         },
         {
           x: 6,
           y: 7,
-          img: '../../assets/figures/wN.png',
+          Img: '../../assets/figures/wN.png',
           alive: true,
-          type: FigureType.Knight,
-          color: FigureColor.White
+          Type: FigureType.Knight,
+          Color: FigureColor.White
         },
         {
           x: 2,
           y: 7,
-          img: '../../assets/figures/wB.png',
+          Img: '../../assets/figures/wB.png',
           alive: true,
-          type: FigureType.Bishop,
-          color: FigureColor.White
+          Type: FigureType.Bishop,
+          Color: FigureColor.White
         },
         {
           x: 5,
           y: 7,
-          img: '../../assets/figures/wB.png',
+          Img: '../../assets/figures/wB.png',
           alive: true,
-          type: FigureType.Bishop,
-          color: FigureColor.White
+          Type: FigureType.Bishop,
+          Color: FigureColor.White
         },
         {
           x: 4,
           y: 7,
-          img: '../../assets/figures/wK.png',
+          Img: '../../assets/figures/wK.png',
           alive: true,
-          type: FigureType.King,
-          color: FigureColor.White
+          Type: FigureType.King,
+          Color: FigureColor.White
         },
         {
           x: 3,
           y: 7,
-          img: '../../assets/figures/wQ.png',
+          Img: '../../assets/figures/wQ.png',
           alive: true,
-          type: FigureType.Queen,
-          color: FigureColor.White
+          Type: FigureType.Queen,
+          Color: FigureColor.White
         },
         {
           id: 1,
           x: 0,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 1,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 2,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 3,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 4,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 5,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 6,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 7,
           y: 1,
-          img: '../../assets/figures/bP.png',
+          Img: '../../assets/figures/bP.png',
           alive: true,
-          type: FigureType.Pawn,
-          color: FigureColor.Black
+          Type: FigureType.Pawn,
+          Color: FigureColor.Black
         },
         {
           x: 0,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 1,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 2,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 3,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 4,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 5,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 6,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         },
         {
           x: 7,
           y: 6,
-          img: '../../assets/figures/wP.png',
+          Img: '../../assets/figures/wP.png',
           alive: true,
-          type: FigureType.Pawn,
+          Type: FigureType.Pawn,
           reverse: true,
-          color: FigureColor.White
+          Color: FigureColor.White
         }
         
     ];
 
     public static rules = [
       {
-        type: FigureType.Pawn,
+        Type: FigureType.Pawn,
         steps: [
           {
             y: 1
@@ -297,7 +297,7 @@ export class FiguresSetting{
         ]
       },
       {
-        type: FigureType.Knight,
+        Type: FigureType.Knight,
         steps: [
           {
             y: 2,
@@ -335,22 +335,22 @@ export class FiguresSetting{
         
       },
       {
-        type: FigureType.Bishop,
+        Type: FigureType.Bishop,
         types: [StepType.Diagonal]
         
       },
       {
-        type: FigureType.Queen,
+        Type: FigureType.Queen,
         types: [StepType.Diagonal, StepType.Strait]
         
       },
       {
-        type: FigureType.Rook,
+        Type: FigureType.Rook,
         types: [StepType.Strait]
         
       },
       {
-        type: FigureType.King,
+        Type: FigureType.King,
         steps: [
           {
             x: 1,

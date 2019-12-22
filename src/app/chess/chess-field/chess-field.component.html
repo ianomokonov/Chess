@@ -10,7 +10,7 @@
             class="figure" 
             *ngFor="let figure of figures"  
             [ngClass]="{'active':figure.active, 'd-none': !figure.alive}"
-            [ngStyle]="{'left':figure.x*80+'px', 'top':figure.y*80+'px', 'background-image':'url('+figure.img+')'}"
+            [ngStyle]="{'left':figure.x*80+'px', 'top':figure.y*80+'px', 'background-image':'url('+figure.Img+')'}"
             (click)="take(figure)"
             >
         </div>
@@ -20,7 +20,7 @@
             <div 
             class="figure" 
             *ngFor="let figure of dead.white"  
-            [ngStyle]="{'background-image':'url('+figure.img+')'}"
+            [ngStyle]="{'background-image':'url('+figure.Img+')'}"
             >
             </div>
         </div>

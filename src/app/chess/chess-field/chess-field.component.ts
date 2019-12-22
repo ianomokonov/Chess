@@ -41,14 +41,20 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     this.figures = JSON.parse(JSON.stringify(FiguresSetting.white));
     this.rows = [];
     this.dead = { white: [], black: [] };
-    this.genField();
-    this.ws.socket.next({key: 'getGame', id: this.gameId});
+    this.genField()
     this.ws.socket.subscribe(x => {
       console.log(x)
+      if(x.Figures){
+        this.figures = x.Figures.map(f => {
+          f.alive = true;
+          return f;
+        });
+        console.log(this.figures);
+      }
       // this.figureGo(x);
     });
     setTimeout(x => {
-      this.ws.socket.next({key: 'getGame', id: this.gameId});
+      this.ws.socket.next({key: 'get-game', id: this.gameId});
     }, 100);
     
     
@@ -57,7 +63,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     //   this.cs.getGameSteps(this.gameId)
     // ]).subscribe(([game, steps]) => {
     //   if(game){
-    //     this.currentColor = game.color;
+    //     this.currentColor = game.Color;
     //     this.figures = game.figures;
     //     steps.forEach(x => {
     //       const figure = this.figures.find(f => f.id === x.figureId);
@@ -111,14 +117,14 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   }
 
   take(figure: Figure){
-    if(figure.color !== this.currentColor){
+    if(figure.Color !== this.currentColor){
       if(this.possibleSteps.indexOf(`${figure.x},${figure.y}`)>-1){
         
         figure.alive = false;
-        this.dead[figure.color].push(figure);
+        this.dead[figure.Color].push(figure);
         this.figures.splice(this.figures.findIndex(x => x.x == figure.x && x.y == figure.y), 1);
         
-        if(figure.type === FigureType.King){
+        if(figure.Type === FigureType.King){
           alert(this.currentColor + ' win!' )
           this.ngOnInit();
         }
@@ -133,7 +139,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
     figure.active = !figure.active;
     this.activeFigure = figure;
 
-    const rule = FiguresSetting.rules.find(x => x.type === figure.type);
+    const rule = FiguresSetting.rules.find(x => x.Type === figure.Type);
     this.possibleSteps = [];
     if(rule.steps){
       rule.steps.forEach(s => {
@@ -148,7 +154,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
           }
           let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
           if(f){
-            if(f.color !== this.activeFigure.color && !rule.kill){
+            if(f.Color !== this.activeFigure.Color && !rule.kill){
               this.possibleSteps.push(`${pos.x},${pos.y}`);
             }
           } else {
@@ -168,7 +174,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
         }
         let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
           if(f){
-            if(f.color !== this.activeFigure.color){
+            if(f.Color !== this.activeFigure.Color){
               this.possibleSteps.push(`${pos.x},${pos.y}`);
             }
             
@@ -209,7 +215,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
 
                 let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
                 if(f){
-                  if(f.color !== this.activeFigure.color){
+                  if(f.Color !== this.activeFigure.Color){
                     this.possibleSteps.push(`${pos.x},${pos.y}`);
                   }
                   delete next[key];
@@ -256,7 +262,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
 
                 let f = this.figures.find(x => x.x == pos.x && x.y == pos.y);
                 if(f){
-                  if(f.color !== this.activeFigure.color){
+                  if(f.Color !== this.activeFigure.Color){
                     this.possibleSteps.push(`${pos.x},${pos.y}`);
                   }
                   delete next[key];

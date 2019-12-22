@@ -7,11 +7,11 @@ export class Figure{
     id?: number;
     x?: number;
     y?: number;
-    img: string;
+    Img: string;
     alive: boolean = true;
-    type: FigureType;
+    Type: FigureType;
     reverse?: boolean;
-    color: FigureColor;
+    Color: FigureColor;
     active?: boolean;
 }
 
