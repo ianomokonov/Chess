@@ -39,28 +39,40 @@ export class BingoFieldComponent implements OnInit {
     this.ws.socket.subscribe(x => {
        console.log(x);
        if(x){
-        x.Cards = x.Cards.map(e => {
-          e.Cells = e.Cells.map(c => {
-            return c.Value ? +c.Value : null;
-          })
-          return e;
-        });
-        this.myCards = x.Cards.filter(c => c.PlayerId == this.playerId);
-        this.cards = x.Cards.filter(c => c.PlayerId != this.playerId);
-        console.log(this.myCards)
+         if(x.Cards){
+          x.Cards = x.Cards.map(e => {
+            e.Cells = e.Cells.map(c => {
+              return c.Value ? +c.Value : null;
+            })
+            return e;
+          });
+          this.myCards = x.Cards.filter(c => c.PlayerId == this.playerId);
+          this.cards = x.Cards.filter(c => c.PlayerId != this.playerId);
+         }
+        
+        
+        if(x.key){
+          switch(x.key){
+            case 'next':{
+              this.currentNumber = this.barrelNumbers[x.value];
+              this.barrelNumbers.splice(x.value, 1);
+              if(!this.barrelNumbers.length){
+                alert('The end!');
+              }
+            }
+          }
+        }
        }
 
        if(!this.myCards.length){
         this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId }});
        }
-      
-
-     
-      
     });
+    
 
     setTimeout(x => {
       this.ws.socket.next({key: 'get-game', id: this.gameId});
+      this.next();
     }, 100)
     // this.bs.getGame(this.gameId).subscribe( game => {
     //   this.cards = game.cards;
@@ -104,13 +116,7 @@ export class BingoFieldComponent implements OnInit {
   }
 
   next(){
-    if(this.barrelNumbers.length > 0){
-      const index = this.randomInteger(0,this.barrelNumbers.length-1, false);
-      this.currentNumber = this.barrelNumbers[index];
-      this.barrelNumbers.splice(index, 1);
-    }else{
-      alert('The end!')
-    }
-    
+    const index = this.randomInteger(0,this.barrelNumbers.length-1, false);
+    this.ws.socket.next({key: 'next', value: index});
   }
 }
