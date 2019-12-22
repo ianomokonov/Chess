@@ -1,6 +1,6 @@
 <div class="m-auto" *ngIf="cards?.length || myCards?.length">
     <div class="first mb-5">
-        <bingo-card [current]="currentNumber" *ngFor="let card of cards" [cardId]="card.Id" [numbers]="card.Cells"></bingo-card>
+        <bingo-card [current]="currentNumber" [choosedIndexes]="choosedIndexes['card'+card.Id]" *ngFor="let card of cards" [cardId]="card.Id" [numbers]="card.Cells"></bingo-card>
     </div>
     <div class="barrel flex-center">
         <div class="btn btn-link">Назад</div>
