@@ -34,12 +34,12 @@ while (true) {
         $data = fread($connect, 100000);
         
 
-        if (!$data) { //соединение было закрыто
-            fclose($connect);
-            unset($connects[ array_search($connect, $connects) ]);
-            onClose($connect);//вызываем пользовательский сценарий
-            continue;
-        }
+        // if (!$data) { //соединение было закрыто
+        //     fclose($connect);
+        //     unset($connects[ array_search($connect, $connects) ]);
+        //     onClose($connect);//вызываем пользовательский сценарий
+        //     continue;
+        // }
 
         foreach($connects as $con){
             onMessage($con, $data);//вызываем пользовательский сценарий

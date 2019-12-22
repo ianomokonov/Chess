@@ -95,11 +95,11 @@ class DataBase {
     }
 
     public function getGame($id){
-        // $game = array(
-        //     "FirstPlayerId" => 1,
-        //     "Color" => "white"
-        // );
-        // return array("Game" => $game, "Figures" => $this->getFigures());
+        $game = array(
+            "FirstPlayerId" => 1,
+            "Color" => "white"
+        );
+        return array("Game" => $game, "Figures" => $this->getFigures()); // шахматы, убрать после реализации авторизации
         $sth = $this->db->prepare("SELECT * FROM games WHERE Id=?");
         $sth->execute(array($id));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Game');
