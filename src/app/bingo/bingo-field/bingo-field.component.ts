@@ -52,14 +52,16 @@ export class BingoFieldComponent implements OnInit {
 
        if(!this.myCards.length){
         this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId }});
-       } else {
-        this.ws.socket.next({key: 'get-game', id: this.gameId});
        }
       
 
      
       
     });
+
+    setTimeout(x => {
+      this.ws.socket.next({key: 'get-game', id: this.gameId});
+    }, 100)
     // this.bs.getGame(this.gameId).subscribe( game => {
     //   this.cards = game.cards;
     //   for( let i = 1; i < 91; i++){
