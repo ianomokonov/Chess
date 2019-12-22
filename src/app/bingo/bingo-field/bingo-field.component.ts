@@ -16,7 +16,7 @@ export class BingoFieldComponent implements OnInit {
   numbers = [];
   quariesCount = 0;
   barrelNumbers = [];
-  playerId = 2;
+  playerId = 1;
   currentNumber = null;
   constructor( private ws: WebsocketService) { 
     for(let i = 0; i < 9; i++){

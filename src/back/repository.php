@@ -2,10 +2,24 @@
 require 'models.php';
 class DataBase {
     public $db;
+    private $numbers;
     public function __construct()
     {
         $this->db = new PDO('mysql:host=localhost;dbname=games; charset=UTF8','root','');
         $this->db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING);
+        $this->numbers = [];
+        for($i = 0; $i < 9; $i++){
+            $row = [];
+            for($j = 0; $j < 10; $j++){
+            if($i == 0 && $j == 0){
+                continue;
+            }
+            $row[] = $i*10 + $j;
+
+            }
+            $this->numbers[] = $row;
+        }
+        $this->numbers[8][] = 90;
     }
 
     private function genInsertQuery($ins, $t){
@@ -43,6 +57,7 @@ class DataBase {
         if($res[1][0]!=null){
             $s->execute($res[1]);
         }
+        
         return $this->db->lastInsertId();
     }
 
@@ -61,13 +76,40 @@ class DataBase {
         return $sth->fetchAll();
     }
 
+    private function getCards($gameId, $playerId = false){
+        if($playerId){
+            $sth = $this->db->prepare("SELECT * FROM bingocards WHERE GameId=? AND PlayerId=?");
+            $sth->execute(array($gameId, $playerId));
+        } else {
+            $sth = $this->db->prepare("SELECT * FROM bingocards WHERE GameId=?");
+            $sth->execute(array($gameId));
+        }
+        
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Card');
+        $cards = [];
+        while($card = $sth->fetch()){
+            $card->Cells = $this->getCard($card->Id);
+            $cards[] = $card;
+        }
+        return $cards;
+    }
+
     public function getGame($id){
-        return array("game" => $game, "Figures" => $this->getFigures());
+        // $game = array(
+        //     "FirstPlayerId" => 1,
+        //     "Color" => "white"
+        // );
+        // return array("Game" => $game, "Figures" => $this->getFigures());
         $sth = $this->db->prepare("SELECT * FROM games WHERE Id=?");
         $sth->execute(array($id));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Game');
         $game = $sth->fetch();
-        $game->Figures = $this->getFigures();
+        if($game->Type == 'bingo'){
+            $game->Cards = $this->getCards($id);
+        } else {
+            $game->Figures = $this->getFigures();
+        }
+        
         return $game;
     }
     
@@ -87,29 +129,68 @@ class DataBase {
         return $sth->fetch();
     }
 
-    public function addCard($card){
-        $res = $this->genInsertQuery($card,"bingocards");
-        $s = $this->db->prepare($res[0]);
-        if($res[1][0]!=null){
-            $s->execute($res[1]);
+    public function addCards($card){
+        if(count($this->getCards($card->GameId, $card->PlayerId)) < 1){
+            for( $i = 0; $i < 2; $i++){
+                $cells = $this->genCard($this->numbers);
+                $res = $this->genInsertQuery((array)$card,"bingocards");
+                $s = $this->db->prepare($res[0]);
+                if($res[1][0]!=null){
+                    $s->execute($res[1]);
+                }
+                $id = $this->db->lastInsertId();
+                $this->addCardCells($cells, $id);
+            }
         }
-        return $this->db->lastInsertId();
+        
+        
+        return $this->getGame($card->GameId);
     }
 
-    public function addCardCells($card){
-        $res = $this->genInsertQuery($card,"bingocardcells");
-        $s = $this->db->prepare($res[0]);
-        if($res[1][0]!=null){
-            $s->execute($res[1]);
+    private function addCardCells($cardCells, $cardId){
+        foreach($cardCells as $cell){
+            $cell = (array)$cell;
+            $cell['CardId'] = $cardId;
+            $res = $this->genInsertQuery((array)$cell,"bingocardcells");
+            $s = $this->db->prepare($res[0]);
+            if($res[1][0]!=null){
+                $s->execute($res[1]);
+            }
         }
-        return $this->db->lastInsertId();
     }
 
     public function getCard($cardId){
         $sth = $this->db->prepare("SELECT * FROM bingocardcells WHERE CardId=?");
         $sth->execute(array($cardId));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Bingo');
-        return $sth->fetch();
+        return $sth->fetchAll();
+    }
+    private function genCard($numbers) {
+        $nums = json_decode(json_encode($numbers));
+        $cells = [];
+        for($j = 0; $j<27; $j+=3){
+          $number = $j/3;
+          $index = $this->randomInteger(0, count($nums[$number])-1);
+          $cells[] = array("Position" => $j+1, "Value" => $nums[$number][$index]);
+          unset($nums[$number][$index]);
+          $index = $this->randomInteger(0, count($nums[$number])-1);
+          $cells[] = array("Position" => $j+2, "Value" => $nums[$number][$index]);
+          unset($nums[$number][$index]);
+          $index = !$cells[$j] && !$cells[$j+1] ? 
+          $this->randomInteger(0, count($nums[$number])-1, false) : $this->randomInteger(0, count($nums[$number]), false);
+            $cells[] = array("Position" => $j+3, "Value" => $nums[$number][$index]);
+        unset($nums[$number][$index]);
+    
+        }
+        return $cells ;
+    }
+    
+    private function randomInteger($min, $max, $withEmpty = false) {
+    
+        $m = $withEmpty ? $max + 10 : $max;
+        // получить случайное число от (min-0.5) до (max+0.5)
+        $rand = rand($min, $max);
+        return $rand > $max ? null : $rand;
     }
 }
 ?>

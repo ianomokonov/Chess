@@ -53,12 +53,7 @@ fclose($server);
 
 function onOpen($connect, $info, $c) {
     echo "open\n";
-    fwrite($connect, encode(json_encode([
-        'id' => 1,
-        'x' => 0,
-        'y' => 2,
-        'c' => $c
-    ])));
+    fwrite($connect, encode(null));
     // fwrite($connect, encode($c));
 }
 
