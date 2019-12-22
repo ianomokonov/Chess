@@ -16,7 +16,7 @@ export class BingoFieldComponent implements OnInit {
   numbers = [];
   quariesCount = 0;
   barrelNumbers = [];
-  playerId = 1;
+  playerId = 2;
   currentNumber = null;
   constructor( private ws: WebsocketService) { 
     for(let i = 0; i < 9; i++){
@@ -36,38 +36,30 @@ export class BingoFieldComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ws.socket.pipe(
-      filter(vl => vl)
-     ).subscribe(x => {
+    this.ws.socket.subscribe(x => {
        console.log(x);
-       if(x.Cards){
-        if(x.Cards.filter(c => c.PlayerId == this.playerId).length<2){
-          if(this.quariesCount < 2){
-            this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId, numbers: this.genCard() }});
-          }
-          this.quariesCount++;
-        }else{
-          this.cards = x.Cards.filter(c => c.PlayerId != this.playerId).map(c => {
-            c.Cells = c.Cells.map(s => s.Value ? +s.Value : null);
-            return c;
-          });
-          console.log(this.cards)
-          this.myCards = x.Cards.filter(c => c.PlayerId == this.playerId).map(c => {
-            c.Cells = c.Cells.map(s => s.Value ? +s.Value : null);
-            return c;
-          });
-          this.next();
-        }
-        
+       if(x){
+        x.Cards = x.Cards.map(e => {
+          e.Cells = e.Cells.map(c => {
+            return c.Value ? +c.Value : null;
+          })
+          return e;
+        });
+        this.myCards = x.Cards.filter(c => c.PlayerId == this.playerId);
+        this.cards = x.Cards.filter(c => c.PlayerId != this.playerId);
+        console.log(this.myCards)
+       }
+
+       if(!this.myCards.length){
+        this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId }});
+       } else {
+        this.ws.socket.next({key: 'get-game', id: this.gameId});
        }
       
 
      
       
     });
-    setTimeout(x => {
-      this.ws.socket.next({key: 'get-game', id: this.gameId});
-    }, 100);
     // this.bs.getGame(this.gameId).subscribe( game => {
     //   this.cards = game.cards;
     //   for( let i = 1; i < 91; i++){
@@ -98,26 +90,6 @@ export class BingoFieldComponent implements OnInit {
     // })
     
     
-  }
-
-  genCard() {
-      const nums = JSON.parse(JSON.stringify(this.numbers));
-      let numbers = [];
-      for(let j = 0; j<27; j+=3){
-        const number = j/3;
-        let index = this.randomInteger(0, nums[number].length-1);
-        numbers.push({Position: j+1, Value: nums[number][index]});
-        nums[number].splice(index, 1);
-        index = this.randomInteger(0, nums[number].length-1);
-        numbers.push({Position: j+2, Value: nums[number][index]});
-        nums[number].splice(index, 1);
-        index = !numbers[j] && !numbers[j+1] ? 
-          this.randomInteger(0, nums[number].length-1, false) : this.randomInteger(0, nums[number].length-1, false);
-        numbers.push({Position: j+3, Value: nums[number][index]});
-        nums[number].splice(index, 1);
-
-      }
-      return numbers;
   }
   
   randomInteger(min, max, withEmpty = true) {
