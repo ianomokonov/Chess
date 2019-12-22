@@ -1,4 +1,12 @@
-<div class="d-flex">
+<div class="d-flex flex-column justify-content-center align-items-center">
+    <div class="dead">
+        <div 
+        class="figure" 
+        *ngFor="let figure of playerColor == 'white' ? dead.white : dead.black"
+        [ngStyle]="{'background-image':'url('+figure.Img+')'}"
+        >
+        </div>
+    </div>
     <div class="field">
         <div class="row" *ngFor="let row of rows">
             <div class="cell" 
@@ -15,24 +23,12 @@
             >
         </div>
     </div>
-    <div class="d-flex flex-column">
-        <div class="dead">
-            <div 
-            class="figure" 
-            *ngFor="let figure of playerColor == 'white' ? dead.white : dead.black"
-            [ngStyle]="{'background-image':'url('+figure.Img+')'}"
-            >
-            </div>
-        </div>
-        <hr class="w-100">
-        <div class="dead">
-            <div 
-            class="figure" 
-            *ngFor="let figure of playerColor == 'white' ? dead.black : dead.white"  
-            [ngStyle]="{'background-image':'url('+figure.Img+')'}"
-            >
-        </div>
-
+    <div class="dead">
+        <div 
+        class="figure" 
+        *ngFor="let figure of playerColor == 'white' ? dead.black : dead.white"  
+        [ngStyle]="{'background-image':'url('+figure.Img+')'}"
+        >
     </div>
 </div>
 
