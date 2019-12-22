@@ -15,7 +15,7 @@ export class BingoFieldComponent implements OnInit {
   myCards = [];
   numbers = [];
   barrelNumbers = [];
-  playerId = 2;
+  playerId = 1;
   currentNumber = null;
   constructor( private ws: WebsocketService) { 
     for(let i = 0; i < 9; i++){
@@ -44,8 +44,10 @@ export class BingoFieldComponent implements OnInit {
           this.ws.socket.next({key:'add-card', value: {GameId: this.gameId, PlayerId: this.playerId, numbers: this.genCard() }});
         }else{
           this.cards = x.Cards.filter(c => c.PlayerId != this.playerId).map(c => {
-            return +c.Value;
+            c.Cells = c.Cells.map(s => s.Value ? +s.Value : null);
+            return c;
           });
+          console.log(this.cards)
           this.myCards = x.Cards.filter(c => c.PlayerId == this.playerId).map(c => {
             c.Cells = c.Cells.map(s => s.Value ? +s.Value : null);
             return c;
