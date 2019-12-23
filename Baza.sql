@@ -31,11 +31,11 @@ CREATE TABLE IF NOT EXISTS steps (
     CONSTRAINT sp_fk FOREIGN KEY(PlayerId) REFERENCES users(Id) ON DELETE CASCADE
 );
 
-ALTER TABLE figures ADD COLUMN x0 int(10);
-ALTER TABLE figures ADD COLUMN y0 int(10);
+ALTER TABLE figures ADD COLUMN x int(10);
+ALTER TABLE figures ADD COLUMN y int(10);
                           
 
-INSERT INTO figures (Type, Color, Img, x0, y0) 
+INSERT INTO figures (Type, Color, Img, x, y) 
 
 VALUES
 
