@@ -47,14 +47,14 @@ export class ChessFieldComponent implements OnInit, OnChanges {
       filter(vl => vl)
      ).subscribe(x => {
       console.log(x)
-      if(x.Game){
-        if(x.Game.FirstPlayerId == this.userId){
-          this.playerColor = x.Game.Color
+      if(x){
+        if(x.FirstPlayerId == this.userId){
+          this.playerColor = x.Color
         } else {
-          this.playerColor = x.Game.Color == FigureColor.White ? FigureColor.Black : FigureColor.White;
+          this.playerColor = x.Color == FigureColor.White ? FigureColor.Black : FigureColor.White;
         }
-        if(x.Game.Figures){
-          this.figures = (x.Game.Figures as Figure[]).map(f => {
+        if(x.Figures){
+          this.figures = (x.Figures as Figure[]).map(f => {
             f.alive = true;
             
             if(this.playerColor == FigureColor.Black){
