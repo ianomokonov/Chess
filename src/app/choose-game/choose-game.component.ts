@@ -46,7 +46,7 @@ export class ChooseGameComponent implements OnInit {
     }else{
       this.ws.socket.next({key:'add-game', value: {
         Type: this.chooseForm.value.type,
-        FirstUserId: sessionStorage.getItem('UserId')}});
+        FirstPlayerId: sessionStorage.getItem('userId')}});
     }
   }
 
