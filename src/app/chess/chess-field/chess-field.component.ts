@@ -130,11 +130,11 @@ export class ChessFieldComponent implements OnInit, OnChanges {
 
   figureGo(figure: any){
     console.log(figure)
-    const f = this.figures.find(x => x.Id == figure.id);
+    const f = this.figures.find(x => x.Id === figure.FigureId);
     console.log(figure)
     
     
-    if(figure.color != this.playerColor){
+    if(f.Color != this.playerColor){
       this.currentColor = this.playerColor;
       f.x = 7-figure.x;
       f.y = 7-figure.y;
@@ -152,7 +152,14 @@ export class ChessFieldComponent implements OnInit, OnChanges {
         this.activeFigure.y = cell.y;
         this.activeFigure['active'] = false;
         this.currentColor = this.currentColor === FigureColor.Black ? FigureColor.White : FigureColor.Black;
-        this.ws.socket.next({key: 'step', id: this.activeFigure.Id, x:cell.x, y:cell.y, color: this.playerColor});
+        const value = {
+          FigureId: this.activeFigure.Id,
+          GameId: this.gameId,
+          x: cell.x,
+          y: cell.y,
+          PlayerId: this.userId
+        }
+        this.ws.socket.next({key: 'step', value: value});
       
     } else {
       this.activeFigure['active'] = false;
