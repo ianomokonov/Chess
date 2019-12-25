@@ -32,7 +32,7 @@ export class ChooseGameComponent implements OnInit {
     ).subscribe(x => {
       console.log(x);
       console.log(sessionStorage.getItem('userId'));
-      this.router.navigate([this.chooseForm.value.type, x.Id]);
+      this.router.navigate([this.chooseForm.value.type, x]);
     })
   }
 
