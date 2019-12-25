@@ -38,4 +38,10 @@ class Card{
     public $Id;
     public $GameId;
 }
+ class User{
+     public $Id;
+     public $Name;
+     public $Login;
+     public $Password;
+ }
 ?>

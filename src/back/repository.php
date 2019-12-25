@@ -52,12 +52,11 @@ class DataBase {
     }
 
     public function addGame($game){
-        $res = $this->genInsertQuery($game,"games");
+        $res = $this->genInsertQuery($game,'games');
         $s = $this->db->prepare($res[0]);
         if($res[1][0]!=null){
             $s->execute($res[1]);
         }
-        
         return $this->db->lastInsertId();
     }
 
@@ -95,11 +94,6 @@ class DataBase {
     }
 
     public function getGame($id){
-        $game = array(
-            "FirstPlayerId" => 1,
-            "Color" => "white"
-        );
-        return array("Game" => $game, "Figures" => $this->getFigures()); // шахматы, убрать после реализации авторизации
         $sth = $this->db->prepare("SELECT * FROM games WHERE Id=?");
         $sth->execute(array($id));
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Game');
@@ -165,6 +159,7 @@ class DataBase {
         $sth->setFetchMode(PDO::FETCH_CLASS, 'Bingo');
         return $sth->fetchAll();
     }
+
     private function genCard($numbers) {
         $nums = json_decode(json_encode($numbers));
         $cells = [];
@@ -191,6 +186,35 @@ class DataBase {
         // получить случайное число от (min-0.5) до (max+0.5)
         $rand = rand($min, $max);
         return $rand > $max ? null : $rand;
+    }
+
+    public function addUser($user){
+        $res = $this->genInsertQuery((array)$user,'users');
+        $s = $this->db->prepare($res[0]);
+        if($res[1][0]!=null){
+            $s->execute($res[1]);
+        }
+        return $this->db->lastInsertId();
+    }
+
+    public function logIn($user){
+        $password = $user->Password;
+        $sth = $this->db->prepare("SELECT * FROM users WHERE Login=?");
+        $sth->execute(array($user->Login));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
+        $res = $sth->fetch();
+        if ($res->Password==$password) {
+            return $res->Id;
+        }
+        else {
+            return null;
+        }
+    }
+
+    private function getUserPassword($id){
+        $s = $this->db->prepare("SELECT Password FROM users WHERE Id=?");
+        $s->execute(array($id));
+        return $s->fetch()['Password'];
     }
 }
 ?>

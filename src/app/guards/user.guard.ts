@@ -8,7 +8,7 @@ export class UserGuard implements CanActivate{
 
     }
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) : Observable<boolean> | boolean{
-         if(sessionStorage.getItem('userToken')){
+         if(sessionStorage.getItem('userId')){
             return of(true);
          }else{
             this.router.navigate(['/login']);

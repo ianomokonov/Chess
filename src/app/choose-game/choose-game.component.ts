@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { ChessService } from '../services/chess.service';
 import { BingoService } from '../services/bingo.service';
 import { FigureColor } from '../models';
+import { WebsocketService } from '../services/websockets.service';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-choose-game',
@@ -13,7 +15,7 @@ import { FigureColor } from '../models';
 export class ChooseGameComponent implements OnInit {
   public chooseForm: FormGroup;
   constructor( private _fb: FormBuilder, private router: Router, private chessService: ChessService,
-    private bingoService: BingoService ) { }
+    private bingoService: BingoService, private ws:WebsocketService) { }
 
   ngOnInit() {
     this.bingoService.userId = null;
@@ -24,17 +26,27 @@ export class ChooseGameComponent implements OnInit {
       color: [FigureColor.White, Validators.required],
       gameId: [null]
     })
+
+    this.ws.socket.pipe(
+      filter(vl => vl)
+    ).subscribe(x => {
+      console.log(x);
+      console.log(sessionStorage.getItem('userId'));
+      this.router.navigate([this.chooseForm.value.type, x]);
+    })
   }
 
   create(){
     if(this.chooseForm.value.type == GameType.Chess){
-      this.chessService.createGame({type: FigureColor.White}).subscribe( id=> {
-        this.router.navigate([GameType.Chess, id]);
-      })
+      this.ws.socket.next({key:'add-game', value: {
+        Type: this.chooseForm.value.type,
+        FirstPlayerId: sessionStorage.getItem('userId'),
+        Color: this.chooseForm.value.color
+      }});
     }else{
-      this.bingoService.createGame({}).subscribe( id=> {
-        this.router.navigate([GameType.Bingo, id]);
-      })
+      this.ws.socket.next({key:'add-game', value: {
+        Type: this.chooseForm.value.type,
+        FirstUserId: sessionStorage.getItem('UserId')}});
     }
   }
 

@@ -21,7 +21,6 @@ function produce($data){
                 
             case 'add-game':
                 $b = $data->value;
-                // return json_encode($ctxt->createGame($data['Login'], $data['Password'], $b));
                 return json_encode($ctxt->addGame($b));
                 
             case 'join-game':
@@ -40,6 +39,14 @@ function produce($data){
                 
             case 'get-card':
                 return json_encode($ctxt->getCard($data->Id));
+                
+            case 'add-user':
+                $b = $data->value;
+                return json_encode($ctxt->addUser($b));
+
+            case 'log-in':
+                $b = $data->value;
+                return json_encode($ctxt->logIn($b));
                 
             default:
                 return json_encode($data);
