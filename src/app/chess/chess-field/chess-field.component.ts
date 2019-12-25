@@ -48,7 +48,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
      ).subscribe(x => {
       console.log(x)
       if(x.Game){
-        if(x.Game.FirstPlayerId == this.userId){
+        if(x.Game.FirstPlayerId == sessionStorage.getItem('userId')){
           this.playerColor = x.Game.Color
         } else {
           this.playerColor = x.Game.Color == FigureColor.White ? FigureColor.Black : FigureColor.White;
