@@ -26,9 +26,12 @@ export class AuthFormComponent implements OnInit {
       filter(vl => vl)
     ).subscribe(x => {
       console.log(x);
-      if (x!=null) {
-        sessionStorage.setItem('userId', x);
-        this.router.navigate(['/choose']);
+      if (x) {
+        if (x.Login == this.userForm.value.Login) {
+          console.log([x, this.userForm.value]);
+          sessionStorage.setItem('userId', x.Id);
+          this.router.navigate(['/choose']);
+        }
       }
       else{
         return;

@@ -26,7 +26,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
   private playerColor: FigureColor;
   public dead:{ white:Figure[], black:Figure[] } = { white: [], black: [] };
   constructor( private cs: ChessService, private router: Router, private ws:WebsocketService) {
-    this.currentColor = FigureColor.White;
+    this.currentColor = FigureColor.White; this.userId = +sessionStorage.getItem('userId');
   }
 
   ngOnChanges(){
@@ -48,29 +48,29 @@ export class ChessFieldComponent implements OnInit, OnChanges {
      ).subscribe(x => {
       console.log(x)
       if(x.Game){
-        if(x.Game.FirstPlayerId == sessionStorage.getItem('userId')){
+        if(x.Game.FirstPlayerId == this.userId){
           this.playerColor = x.Game.Color
         } else {
           this.playerColor = x.Game.Color == FigureColor.White ? FigureColor.Black : FigureColor.White;
         }
-      }
-      if(x.Figures){
-        this.figures = (x.Figures as Figure[]).map(f => {
-          f.alive = true;
-          
-          if(this.playerColor == FigureColor.Black){
-            f.y = 7 - f.y;
-            f.x = 7 - f.x;
-          } else {
-            f.y = +f.y;
-            f.x = +f.x;
-          }
-          
-          f.reverse = f.Color == this.playerColor && f.Type == FigureType.Pawn;
-          
-          return f;
-        });
-        console.log(this.figures);
+        if(x.Game.Figures){
+          this.figures = (x.Game.Figures as Figure[]).map(f => {
+            f.alive = true;
+            
+            if(this.playerColor == FigureColor.Black){
+              f.y = 7 - f.y;
+              f.x = 7 - f.x;
+            } else {
+              f.y = +f.y;
+              f.x = +f.x;
+            }
+            
+            f.reverse = f.Color == this.playerColor && f.Type == FigureType.Pawn;
+            
+            return f;
+          });
+          console.log(this.figures);
+        }
       }
       if(x.key){
         switch(x.key){
