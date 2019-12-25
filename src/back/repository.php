@@ -52,7 +52,7 @@ class DataBase {
     }
 
     public function addGame($game){
-        $res = $this->genInsertQuery($game,'games');
+        $res = $this->genInsertQuery((array)$game,'games');
         $s = $this->db->prepare($res[0]);
         if($res[1][0]!=null){
             $s->execute($res[1]);
@@ -60,13 +60,10 @@ class DataBase {
         return $this->db->lastInsertId();
     }
 
-    public function addPlayer($player){
-        $res = $this->genInsertQuery($player,"games");
-        $s = $this->db->prepare($res[0]);
-        if($res[1][0]!=null){
-            $s->execute($res[1]);
-        }
-        return $this->db->lastInsertId();
+    public function addPlayer($player, $t){
+        $sth = $this->db->prepare("UPDATE games SET SecondPlayerId = ? WHERE Id = ?");
+        $sth->execute(array($player, $t));
+        return $player;
     }
 
     private function getFigures(){
@@ -103,8 +100,27 @@ class DataBase {
         } else {
             $game->Figures = $this->getFigures();
         }
-        
         return $game;
+    }
+
+    public function enterGame($ids){
+        $id = $ids->id;
+        $Pid = $ids->PlayerId;
+        $sth = $this->db->prepare("SELECT * FROM games WHERE Id=?");
+        $sth->execute(array($id));
+        $sth->setFetchMode(PDO::FETCH_CLASS, 'Game');
+        $game = $sth->fetch();
+        if($game->Type == 'bingo'){
+            $game->Cards = $this->getCards($id);
+        } else {
+            $game->Figures = $this->getFigures();
+        }
+        if ($game->FirstPlayerId!=$Pid) {
+            if ($game->SecondPlayerId==null) {
+                $game->SecondPlayerId = $this->addPlayer($Pid, $id);
+            }
+        }
+        return $game->Id;
     }
     
     public function addStep($step){

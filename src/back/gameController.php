@@ -11,6 +11,10 @@ function produce($data){
             case 'get-game':
                 return json_encode($ctxt->getGame($data->id));
                 
+            case 'enter-game':
+                $b = $data->value;
+                return json_encode($ctxt->enterGame($b));
+
             case 'get-step':
                 return json_encode($ctxt->getStep($data->Id));
                 
