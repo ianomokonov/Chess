@@ -72,6 +72,7 @@ export class ChessFieldComponent implements OnInit, OnChanges {
           console.log(this.figures);
         }
       }
+      console.log(x)
       if(x.key){
         switch(x.key){
           case 'step':{

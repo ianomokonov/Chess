@@ -114,22 +114,23 @@ class DataBase {
             $game->Cards = $this->getCards($id);
         } else {
             $game->Figures = $this->getFigures();
+            $figures = $this->getFigures();
         }
         if ($game->FirstPlayerId!=$Pid) {
             if ($game->SecondPlayerId==null) {
                 $game->SecondPlayerId = $this->addPlayer($Pid, $id);
             }
         }
-        return $game->Id;
+        return $game;
     }
     
     public function addStep($step){
-        $res = $this->genInsertQuery($step,"steps");
+        $res = $this->genInsertQuery((array)$step,"steps");
         $s = $this->db->prepare($res[0]);
         if($res[1][0]!=null){
             $s->execute($res[1]);
         }
-        return $this->db->lastInsertId();
+        return $step;
     }
 
     public function getStep($id){
@@ -220,7 +221,7 @@ class DataBase {
         $sth->setFetchMode(PDO::FETCH_CLASS, 'User');
         $res = $sth->fetch();
         if ($res->Password==$password) {
-            return $res->Id;
+            return $res;
         }
         else {
             return null;
