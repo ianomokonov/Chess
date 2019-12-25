@@ -18,7 +18,7 @@ function produce($data){
             case 'get-step':
                 return json_encode($ctxt->getStep($data->Id));
                 
-            case 'step':
+            case 'add-step':
                 $b = $data->value;
                 // return json_encode($ctxt->addStep($data['Login'], $data['Password'], $b));
                 return json_encode($ctxt->addStep($b));
