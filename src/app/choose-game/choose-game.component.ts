@@ -32,7 +32,7 @@ export class ChooseGameComponent implements OnInit {
     ).subscribe(x => {
       console.log(x);
       console.log(sessionStorage.getItem('userId'));
-      this.router.navigate([this.chooseForm.value.type, x.Id]);
+      this.router.navigate([this.chooseForm.value.type, x]);
     })
   }
 
@@ -46,7 +46,7 @@ export class ChooseGameComponent implements OnInit {
     }else{
       this.ws.socket.next({key:'add-game', value: {
         Type: this.chooseForm.value.type,
-        FirstUserId: sessionStorage.getItem('UserId')}});
+        FirstPlayerId: sessionStorage.getItem('userId')}});
     }
   }
 
